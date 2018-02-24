@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tongwei.sso.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="com.tongwei.auth.model.Permission">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="app_code" jdbcType="VARCHAR" property="appCode" />
+    <result column="ord" jdbcType="INTEGER" property="order" />
+    <result column="group_id" jdbcType="INTEGER" property="groupId" />
+    <result column="group_code" jdbcType="VARCHAR" property="groupCode" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  
+  <!-- 根据角色ids查询权限 -->
+  <select id="queryPermsByRoleIds" parameterType="list" resultType="Permission">
+  	select DISTINCT p.id,p.name,p.code,p.app_code appCode,p.group_code groupCode from ts_perm p
+  		join tm_role_perm rp
+  		on p.id=rp.perm_id
+  	where
+  	<choose>
+  		<when test="ids!=null and ids.size>0">
+  			rp.role_id in
+  			<foreach collection="ids" item="item" open="(" separator="," close=")">
+	        	#{item}
+	        </foreach>
+  		</when>
+  		<otherwise>
+  			false
+  		</otherwise>
+  	</choose>
+  </select>
+  
+  <!-- 根据角色id查询权限 -->
+  <select id="queryPermsByRoleId" parameterType="int" resultType="Permission">
+  	select DISTINCT p.app_code appCode,p.code,p.group_code groupCode from ts_perm p
+  		join tm_role_perm rp
+  		on p.id=rp.perm_id
+  	where rp.role_id = #{roleId}
+  </select>
+  
+  <!-- 根据角色id appcode查询权限 -->
+  <select id="getPermIdsByRoleIdAndAppCode" resultType="int">
+  	select p.id from ts_perm p
+  		join tm_role_perm rp
+  		on p.id=rp.perm_id
+  	where rp.role_id = #{roleId}
+  	and p.app_code = #{appCode}
+  </select>
+  
+  
+</mapper>

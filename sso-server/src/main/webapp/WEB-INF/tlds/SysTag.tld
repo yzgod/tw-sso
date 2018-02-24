@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<taglib>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>sys</short-name>
+	<uri>http://www.tongwei.com/sys</uri>
+	<display-name>sys</display-name>
+	<description>sys properties</description>
+	<tag>
+		<name>ctx</name>
+		<tag-class>com.tongwei.sso.tag.CtxTag</tag-class>
+		<bodycontent>empty</bodycontent>
+	</tag>
+	<tag>
+		<name>static</name>
+		<tag-class>com.tongwei.sso.tag.StaticTag</tag-class>
+		<bodycontent>empty</bodycontent>
+	</tag>
+</taglib>

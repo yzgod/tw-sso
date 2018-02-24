@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tongwei.sso.mapper.PositionMapper">
+  
+  <resultMap id="posSelfMap" type="com.tongwei.auth.model.Position">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="ord" jdbcType="INTEGER" property="ord" />
+    <result column="org_id" jdbcType="INTEGER" property="orgId" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <association property="parentPosition" select="selfPos" column="parent_id" />
+  </resultMap>
+  
+  <select id="queryPositionsByOrgId" resultType="Position" >
+  	select p.id,p.name,p.code,p.ord,p.org_id orgId,p.parent_id parentId from ts_position p
+  	where p.org_id=#{oId}
+  </select>
+  
+  <!-- 岗位self递归查询 -->
+  <select id="selfPos" parameterType="int" resultMap="posSelfMap">
+	select o.* from ts_position o 
+	where o.id=#{parent_id}
+  </select>
+  
+  <select id="getPositionById" resultMap="posSelfMap">
+    select o.* from ts_position o
+	where o.id=#{id}
+	order by ord asc
+  </select>
+  
+</mapper>

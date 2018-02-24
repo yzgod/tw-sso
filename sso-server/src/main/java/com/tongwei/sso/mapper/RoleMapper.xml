@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tongwei.sso.mapper.RoleMapper">
+
+  <resultMap id="roleMap" type="com.tongwei.auth.model.Role">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="app_code" jdbcType="VARCHAR" property="appCode" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <association property="parentRole" select="selfRole" column="parent_id" />
+  </resultMap>
+  
+  <!-- 角色self递归查询 -->
+  <select id="selfRole" parameterType="int" resultMap="roleMap">
+	select r.id,r.name,r.code,r.app_code,r.parent_id from ts_role r 
+	where r.id=#{parent_id}
+  </select>
+  
+  <!-- 根据公司ids集合查询角色集合 -->
+  <select id="queryRolesByOrgIds" resultMap="roleMap" parameterType="list" >
+  	select r.id,r.name,r.code,r.app_code,r.parent_id from ts_role r
+  		join tm_org_role ro
+  		on r.id = ro.role_id
+  	where
+  	<choose>
+  		<when test="ids!=null and ids.size>0">
+  			ro.org_id in
+  			<foreach collection="ids" item="item" open="(" separator="," close=")">
+	        	#{item}
+	        </foreach>
+  		</when>
+  		<otherwise>
+  			false
+  		</otherwise>
+  	</choose>
+  </select>
+  
+  <!-- 根据用户组ids集合查询角色集合 -->
+  <select id="queryRolesByUserGroupIds" resultMap="roleMap" parameterType="list" >
+  	select r.id,r.name,r.code,r.app_code,r.parent_id from ts_role r
+  		join tm_group_role gr
+  		on r.id = gr.role_id
+  	where
+  	<choose>
+  		<when test="ids!=null and ids.size>0">
+  			gr.group_id in
+  			<foreach collection="ids" item="item" open="(" separator="," close=")">
+	        	#{item}
+	        </foreach>
+  		</when>
+  		<otherwise>
+  			false
+  		</otherwise>
+  	</choose>
+  </select>
+  
+  <!-- 根据岗位ids集合查询角色集合 -->
+  <select id="queryRolesByPositionIds" resultMap="roleMap" parameterType="list" >
+  	select r.id,r.name,r.code,r.app_code,r.parent_id from ts_role r
+  		join tm_position_role pr
+  		on r.id = pr.role_id
+  	where
+  	<choose>
+  		<when test="ids!=null and ids.size>0">
+  			pr.position_id in
+  			<foreach collection="ids" item="item" open="(" separator="," close=")">
+	        	#{item}
+	        </foreach>
+  		</when>
+  		<otherwise>
+  			false
+  		</otherwise>
+  	</choose>
+  </select>
+  
+  <select id="queryRolesByUserId" parameterType="int" resultMap="roleMap">
+  	select r.id,r.name,r.code,r.app_code,r.parent_id from ts_role r
+  		join tm_user_role ur
+  		on r.id = ur.role_id
+  	where ur.user_id=#{userId}
+  </select>
+  
+  <select id="queryRolesByOrgId" resultType="Role">
+  	select r.id,r.name,r.code,r.app_code appCode from ts_role r
+  		join tm_org_role ro
+  		on ro.role_id=r.id
+  	where ro.org_id=#{oId}
+  </select>
+  
+  <select id="getRolesByMenuId" resultType="Role">
+  	select r.id,r.name,r.code,r.app_code appCode from ts_role r 
+	  	inner join tm_role_menu rm
+	  	on r.id = rm.role_id
+  	where rm.menu_id=#{mId}
+  </select>
+  
+  <insert id="saveRoleMenu">
+  	insert into tm_role_menu values(#{roleId},#{menuId})
+  </insert>
+  
+  <delete id="deleteRoleMenu">
+  	delete from tm_role_menu 
+  	where menu_id = #{menuId}
+  	and
+  	<choose>
+  		<when test="roleIds!=null and roleIds.size>0">
+  			role_id in
+  			<foreach collection="roleIds" item="item" open="(" separator="," close=")">
+	        	#{item}
+	        </foreach>
+  		</when>
+  		<otherwise>
+  			false
+  		</otherwise>
+  	</choose>
+  </delete>
+  
+  <delete id="deleteRoleMenuByRoleId">
+  	delete from tm_role_menu 
+  	where role_id = #{roleId}
+  </delete>
+  
+  <delete id="deleteRolePermByRoleId">
+  	delete from tm_role_perm 
+  	where role_id = #{roleId}
+  </delete>
+  
+  <delete id="deleteUserRoleByUserId">
+  	delete from tm_user_role 
+  	where user_id = #{userId}
+  </delete>
+  
+  <delete id="deleteOrgRoleByOrgId">
+  	delete from tm_org_role 
+  	where org_id = #{orgId}
+  </delete>
+  
+  <delete id="deletePositionRoleByPositionId">
+  	delete from tm_position_role 
+  	where position_id = #{positionId}
+  </delete>
+  
+  <delete id="deleteUgRoleByUgId">
+  	delete from tm_group_role 
+  	where group_id = #{ugId}
+  </delete>
+  
+  <insert id="saveUserRole">
+  	insert into tm_user_role values(#{roleId},#{userId})
+  </insert>
+  
+  <insert id="saveOrgRole">
+  	insert into tm_org_role values(#{orgId},#{roleId})
+  </insert>
+  
+  <insert id="savePositionRole">
+  	insert into tm_position_role values(#{positionId},#{roleId})
+  </insert>
+  
+  <insert id="saveUgRole">
+  	insert into tm_group_role values(#{ugId},#{roleId})
+  </insert>
+  
+  <select id="getRolesByPermId" resultType="Role">
+  	select r.id,r.name,r.code,r.app_code appCode from ts_role r 
+	  	inner join tm_role_perm rp
+	  	on r.id = rp.role_id
+  	where rp.perm_id=#{permId}
+  </select>
+  
+  <insert id="saveRolePerm">
+  	insert into tm_role_perm values(#{roleId},#{permId})
+  </insert>
+  
+  <delete id="deleteRolePerm">
+  	delete from tm_role_perm 
+  	where perm_id = #{permId}
+  	and
+  	<choose>
+  		<when test="roleIds!=null and roleIds.size>0">
+  			role_id in
+  			<foreach collection="roleIds" item="item" open="(" separator="," close=")">
+	        	#{item}
+	        </foreach>
+  		</when>
+  		<otherwise>
+  			false
+  		</otherwise>
+  	</choose>
+  </delete>
+  
+  <select id="checkHasPerm" resultType="boolean">
+  	select EXISTS(
+		select r.role_id from tm_role_perm r
+		inner JOIN ts_perm p
+		on r.perm_id = p.id
+		where r.role_id=#{roleId}
+	) 
+  </select>
+  
+  <select id="checkHasMenu" resultType="boolean">
+  	select EXISTS(
+		select r.role_id from tm_role_menu r
+		inner JOIN ts_menu m
+		on r.menu_id = m.id
+		where r.role_id=#{roleId}
+	) 
+  </select>
+  
+  <select id="checkBelongUser" resultType="boolean">
+  	select EXISTS(
+		select r.role_id from tm_user_role r
+		inner JOIN ts_user u
+		on r.user_id = u.id
+		where r.role_id=#{roleId}
+	) 
+  </select>
+  
+  <select id="checkBelongUserGroup" resultType="boolean">
+  	select EXISTS(
+		select r.group_id from tm_group_role r
+		inner JOIN ts_user_group g
+		on r.group_id = g.id
+		where r.role_id=#{roleId}
+	) 
+  </select>
+  
+  <select id="checkBelongOrg" resultType="boolean">
+  	select EXISTS(
+		select r.org_id from tm_org_role r
+		inner JOIN ts_org o
+		on r.org_id = o.id
+		where r.role_id=#{roleId}
+	) 
+  </select>
+  
+  <select id="checkBelongPosition" resultType="boolean">
+  	select EXISTS(
+		select r.position_id from tm_position_role r
+		inner JOIN ts_position o
+		on r.position_id = o.id
+		where r.role_id=#{roleId}
+	) 
+  </select>
+  
+  <select id="getRoleIdsByUserId" resultType="int">
+	select role_id from tm_user_role
+	where user_id=#{userId}
+  </select>
+  
+  <select id="getRoleIdsByOrgId" resultType="int">
+	select role_id from tm_org_role
+	where org_id=#{orgId}
+  </select>
+  
+  <select id="getRoleIdsByPositionId" resultType="int">
+	select role_id from tm_position_role
+	where position_id=#{positionId}
+  </select>
+  
+  <select id="getRoleIdsByUgId" resultType="int">
+	select role_id from tm_group_role
+	where group_id=#{ugId}
+  </select>
+  
+</mapper>

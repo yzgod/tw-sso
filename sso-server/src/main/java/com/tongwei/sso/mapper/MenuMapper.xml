@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tongwei.sso.mapper.MenuMapper">
+  
+  <resultMap id="menuMap" type="com.tongwei.auth.model.Menu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="app_code" jdbcType="VARCHAR" property="appCode" />
+    <result column="pattern" jdbcType="VARCHAR" property="pattern" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+    <result column="ord" jdbcType="INTEGER" property="ord" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="f1" jdbcType="VARCHAR" property="f1" />
+    <result column="f2" jdbcType="VARCHAR" property="f2" />
+    <result column="f3" jdbcType="VARCHAR" property="f3" />
+    <result column="f4" jdbcType="VARCHAR" property="f4" />
+  </resultMap>
+  
+  <!-- 根据角色id查询菜单 -->
+  <select id="queryMenusForRedisByRoleId" parameterType="int" resultMap="menuMap">
+  	select m.id,m.name,m.app_code,m.pattern,m.parent_id,m.url,m.icon,m.ord from ts_menu m
+  		join tm_role_menu rm
+  		on m.id=rm.menu_id
+  	where rm.role_id = #{roleId}
+  </select>
+  
+  <!-- 根据角色id appcode查询菜单 -->
+  <select id="getMenusByRoleIdAndAppCode" resultType="Menu">
+  	select m.* from ts_menu m
+  		join tm_role_menu rm
+  		on m.id=rm.menu_id
+  	where rm.role_id = #{roleId}
+  	and m.app_code = #{appCode}
+  </select>
+  
+</mapper>

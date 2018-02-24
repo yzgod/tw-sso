@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tongwei.sso.mapper.UserMapper">
+
+	<resultMap id="userMap" type="com.tongwei.auth.model.User">
+	  <id column="id" jdbcType="INTEGER" property="id" />
+	  <result column="login_name" jdbcType="VARCHAR" property="loginName" />
+	  <result column="real_name" jdbcType="VARCHAR" property="realName" />
+	  <result column="cell_phone" jdbcType="TIMESTAMP" property="cellPhone" />
+	  <result column="email" jdbcType="VARCHAR" property="email" />
+	  <result column="password" jdbcType="VARCHAR" property="password" />
+	  <result column="forbidden" jdbcType="BIT" property="forbidden" />
+	  <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	  <result column="remark" jdbcType="VARCHAR" property="remark" />
+	</resultMap>
+	
+	<resultMap id="orgAuthMap" type="com.tongwei.auth.model.Org">
+	    <id column="id" jdbcType="INTEGER" property="id" />
+	    <result column="name" jdbcType="VARCHAR" property="name" />
+	    <result column="code" jdbcType="VARCHAR" property="code" />
+	    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+	    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+	    <result column="ord" jdbcType="INTEGER" property="ord" />
+	    <result column="is_default" jdbcType="BIT" property="isDefault" />
+	    <result column="f1" jdbcType="VARCHAR" property="f1" />
+	    <result column="f2" jdbcType="VARCHAR" property="f2" />
+	    <association property="orgType" javaType="OrgType" >
+	   		<id property="id" column="tid" /> 
+	   		<result column="tname" property="name" />	
+	   		<result column="tcode" property="code" />	
+	   	</association> 
+	    <association property="parentOrg" select="selfOrg" column="parent_id" />
+	</resultMap>
+	
+	<resultMap id="groupAuthMap" type="com.tongwei.auth.model.UserGroup">
+	    <id column="id" jdbcType="INTEGER" property="id" />
+	    <result column="name" jdbcType="VARCHAR" property="name" />
+	    <result column="code" jdbcType="VARCHAR" property="code" />
+	    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+	    <result column="ord" jdbcType="INTEGER" property="ord" />
+	    <result column="f1" jdbcType="VARCHAR" property="f1" />
+	    <result column="f2" jdbcType="VARCHAR" property="f2" />
+	    <association property="parentGroup" select="selfGroup" column="parent_id" />
+	</resultMap>
+	
+	<resultMap id="positionAuthMap" type="com.tongwei.auth.model.Position">
+	    <id column="id" jdbcType="INTEGER" property="id" />
+	    <result column="name" jdbcType="VARCHAR" property="name" />
+	    <result column="code" jdbcType="VARCHAR" property="code" />
+	    <result column="ord" jdbcType="INTEGER" property="ord" />
+	    <result column="org_id" jdbcType="INTEGER" property="orgId" />
+	    <result column="dept_id" jdbcType="INTEGER" property="deptId" />
+	    <result column="is_default" jdbcType="BIT" property="isDefault" />
+	    <association property="parentPosition" select="selfPosition" column="parent_id" />
+	</resultMap>
+	
+	<!-- redis中用户对象 -->
+	<resultMap id="AuthUserMap" type="com.tongwei.auth.model.AuthUser">
+	  <association property="user" resultMap="userMap" />  
+	  <collection property="orgs" column="id" select="queryOrgsByUserId" />
+	  <collection property="groups" column="id" select="queryUserGroupsByUserId" />
+	  <collection property="positions" column="id" select="queryPostionsByUserId" />
+	</resultMap>
+	
+	<!-- 组织查询 -->
+	<select id="queryOrgsByUserId" parameterType="int" resultMap="orgAuthMap">
+		select o.code,o.id,o.parent_id,ou.is_default,ot.code tcode from ts_org o 
+			left join tm_org_user ou
+			on ou.org_id=o.id
+			left join ts_org_type ot
+			on o.type_id=ot.id 
+		where ou.user_id=#{id}
+	</select>
+	
+	<!-- 组织self递归查询 -->
+	<select id="selfOrg" parameterType="int" resultMap="orgAuthMap">
+		select o.id,o.parent_id,o.code from ts_org o 
+		where o.id=#{parent_id}
+	</select>
+	
+	<!-- 用户组查询 -->
+	<select id="queryUserGroupsByUserId" parameterType="int" resultMap="groupAuthMap">
+		select g.code,g.id,g.parent_id from ts_user_group g
+			left join tm_group_user gu
+			on gu.group_id=g.id
+		where gu.user_id=#{id}
+	</select>
+	
+	<!-- 用户组self递归查询 -->
+	<select id="selfGroup" parameterType="int" resultMap="groupAuthMap">
+		select g.code,g.id,g.parent_id from ts_user_group g 
+		where g.id=#{parent_id}
+	</select>
+	
+	
+	<!-- 岗位查询 -->
+	<select id="queryPostionsByUserId" parameterType="int" resultMap="positionAuthMap">
+		select p.code,p.id,p.parent_id,pu.is_default from ts_position p 
+			left join tm_position_user pu
+			on pu.position_id=p.id
+		where pu.user_id=#{id}
+	</select>
+	
+	<!-- 岗位self递归查询 -->
+	<select id="selfPosition" parameterType="int" resultMap="positionAuthMap">
+		select p.code,p.id,p.parent_id from ts_position p 
+		where p.id=#{parent_id}
+	</select>
+	
+	<!-- authUser查询 -->
+	<select id="getAuthUser" parameterType="int" resultMap="AuthUserMap" >
+		select 
+			u.id,u.login_name,u.real_name,u.cell_phone,u.email,u.forbidden
+		 	from ts_user u
+		where u.id=#{userId}
+	</select>
+	
+	<!-- 登陆查询 -->
+	<select id="login" resultMap="userMap" >
+		select 
+			u.id,u.login_name,u.real_name,u.cell_phone,u.email,u.forbidden
+		 	from ts_user u
+		where 
+			u.login_name=#{loginName}
+			or u.cell_phone=#{loginName}
+			and u.password=#{password}
+	</select>
+	
+	<!-- 高级查询用户 -->
+	<select id="queryMultiByPage" resultType="User">
+		<choose>
+			<when test="oId !=null">
+				select distinct u.id,u.real_name realName,u.login_name loginName,u.cell_phone cellPhone,u.forbidden,u.create_time createTime from ts_user u
+				inner join tm_org_user ou
+				on u.id = ou.user_id
+			    where ou.org_id = #{oId}
+			</when>
+			<when test="ugId !=null">
+				select distinct u.id,u.real_name realName,u.login_name loginName,u.cell_phone cellPhone,u.forbidden,u.create_time createTime from ts_user u
+				inner join tm_group_user gu
+				on u.id = gu.user_id
+			    where gu.group_id = #{ugId}
+			</when>
+			<when test="posId !=null">
+				select distinct u.id,u.real_name realName,u.login_name loginName,u.cell_phone cellPhone,u.forbidden,u.create_time createTime from ts_user u
+				inner join tm_position_user pu
+				on u.id = pu.user_id
+			    where pu.position_id = #{posId}
+			</when>
+			<otherwise>
+				select u.id,u.real_name realName,u.login_name loginName,u.cell_phone cellPhone,u.forbidden,u.create_time createTime from ts_user u
+				<where>
+					<if test="keyword !=null and keyword!=''">
+						concat(u.real_name,u.cell_phone) like "%${keyword}%"
+					</if>
+				</where>
+			</otherwise>
+		</choose>
+			
+	</select>
+	
+	<select id="getUsersByOrgIds" resultType="User">
+		select distinct u.login_name loginName,u.forbidden from ts_user u
+				inner join tm_org_user ou
+				on u.id = ou.user_id
+		where
+	  	<choose>
+	  		<when test="orgIds!=null and orgIds.size>0">
+	  			ou.org_id in
+	  			<foreach collection="orgIds" item="item" open="(" separator="," close=")">
+		        	#{item}
+		        </foreach>
+	  		</when>
+	  		<otherwise>
+	  			false
+	  		</otherwise>
+	  	</choose>
+	</select>
+	
+	<select id="getUsersByPositionIds" resultType="User">
+		select distinct u.login_name loginName,u.forbidden from ts_user u
+				inner join tm_position_user ou
+				on u.id = ou.user_id
+		where
+	  	<choose>
+	  		<when test="positionIds!=null and positionIds.size>0">
+	  			ou.position_id in
+	  			<foreach collection="positionIds" item="item" open="(" separator="," close=")">
+		        	#{item}
+		        </foreach>
+	  		</when>
+	  		<otherwise>
+	  			false
+	  		</otherwise>
+	  	</choose>
+	</select>
+	
+	<select id="getUsersByUgIds" resultType="User">
+		select distinct u.login_name loginName,u.forbidden from ts_user u
+				inner join tm_group_user ou
+				on u.id = ou.user_id
+		where
+	  	<choose>
+	  		<when test="ugIds!=null and ugIds.size>0">
+	  			ou.group_id in
+	  			<foreach collection="ugIds" item="item" open="(" separator="," close=")">
+		        	#{item}
+		        </foreach>
+	  		</when>
+	  		<otherwise>
+	  			false
+	  		</otherwise>
+	  	</choose>
+	</select>
+	
+	<insert id="saveUserOrg">
+		insert into tm_org_user values(#{orgId},#{userId},#{isDefault})
+	</insert>
+	
+	<delete id="deleteUserOrg">
+		delete from tm_org_user where user_id = #{userId}
+	</delete>
+	
+	<select id="getMainOrgId" resultType="int">
+		select org_id from tm_org_user where user_id=#{userId} and is_default=1 limit 1
+	</select>
+	
+	<select id="getPartTimeOrgIds" resultType="int">
+		select org_id from tm_org_user where user_id=#{userId} and is_default=0
+	</select>
+	
+	<insert id="saveUserPosition">
+		insert into tm_position_user values(#{userId},#{positionId},#{isDefault})
+	</insert>
+	
+	<select id="getMainPositionId" resultType="int">
+		select position_id from tm_position_user where user_id=#{userId} and is_default=1 limit 1
+	</select>
+	
+	<select id="getPartTimePositionIds" resultType="int">
+		select position_id from tm_position_user where user_id=#{userId} and is_default=0
+	</select>
+	
+	<delete id="deleteUserPosition">
+		delete from tm_position_user where user_id = #{userId}
+	</delete>
+	
+	<insert id="saveUserGroup">
+		insert into tm_group_user values(#{ugId},#{userId})
+	</insert>
+	
+	<select id="getUgIds" resultType="int">
+		select group_id from tm_group_user where user_id=#{userId}
+	</select>
+	
+	<delete id="deleteUserGroup">
+		delete from tm_group_user where user_id = #{userId}
+	</delete>
+  
+</mapper>

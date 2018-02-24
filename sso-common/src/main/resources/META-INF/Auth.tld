@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE taglib
+  PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.2//EN"
+  "http://java.sun.com/dtd/web-jsptaglibrary_1_2.dtd">
+<taglib>
+	<tlib-version>1.0</tlib-version>
+	<jsp-version>1.2</jsp-version>
+	<short-name>sys</short-name>
+	<uri>http://www.tongwei.com/auth</uri>
+	<display-name>auth</display-name>
+	<description>auth jsp tag</description>
+	<tag>
+		<name>inUsers</name>
+		<tag-class>com.tongwei.auth.taglibs.jsp.InUsersTagSupport</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>  
+	            <![CDATA[value : loginNames ; Multivalued please add ',' ;]]>  
+	        </description> 
+		</attribute>
+		<description>  
+            <![CDATA[The body is shown when the loginNames in value is any of one matched for the login user.]]>  
+        </description> 
+	</tag>
+	<tag>
+		<name>hasRoles</name>
+		<tag-class>com.tongwei.auth.taglibs.jsp.HasRolesTagSupport</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>  
+	            <![CDATA[value : roleCodes ; Multivalued please add ',' ;]]>  
+	        </description> 
+		</attribute>
+		<description>  
+            <![CDATA[The body is shown when the roleCodes in value is any of one matched for the login user.]]>  
+        </description> 
+	</tag>
+	<tag>
+		<name>hasRolesAll</name>
+		<tag-class>com.tongwei.auth.taglibs.jsp.HasRolesAllTagSupport</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>  
+	            <![CDATA[value : roleCodes ; Multivalued please add ',' ;]]>  
+	        </description> 
+		</attribute>
+		<description>  
+            <![CDATA[The body is shown when the roleCodes in value is all matched for the login user.]]>  
+        </description> 
+	</tag>
+	<tag>
+		<name>hasPerms</name>
+		<tag-class>com.tongwei.auth.taglibs.jsp.HasPermsTagSupport</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>  
+	            <![CDATA[value : permGrouCode1:permCode1,permCode2...|permGrouCode2:permCodeA,permCodeB...|... ; Multivalued: permGroupCode use '|', permCode use ',' between permGroupCode and permCode use ':' ;]]>  
+	        </description> 
+		</attribute>
+		<description>  
+            <![CDATA[The body is shown when the 'permGrouCode1:permCode1,permCode2...|permGrouCode2:permCodeA,permCodeB...|...' in value is any of perm matched for the login user.]]>  
+        </description> 
+	</tag>
+	<tag>
+		<name>hasPermsAll</name>
+		<tag-class>com.tongwei.auth.taglibs.jsp.HasPermsAllTagSupport</tag-class>
+		<attribute>
+			<name>value</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+			<description>  
+	            <![CDATA[value : permGrouCode1:permCode1,permCode2...|permGrouCode2:permCodeA,permCodeB...|... ; Multivalued: permGroupCode use '|', permCode use ',' between permGroupCode and permCode use ':' ;]]>  
+	        </description> 
+		</attribute>
+		<description>  
+            <![CDATA[The body is shown when the 'permGrouCode1:permCode1,permCode2...|permGrouCode2:permCodeA,permCodeB...|...' in value is all perms matched for the login user.]]>  
+        </description> 
+	</tag>
+</taglib>

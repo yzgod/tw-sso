@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.tongwei.sso.mapper.OrgMapper">
+	
+	<resultMap id="orgMap" type="com.tongwei.auth.model.Org">
+	    <id column="id" jdbcType="INTEGER" property="id" />
+	    <result column="name" jdbcType="VARCHAR" property="name" />
+	    <result column="code" jdbcType="VARCHAR" property="code" />
+	    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+	    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+	    <result column="ord" jdbcType="INTEGER" property="ord" />
+	    <result column="remark" jdbcType="INTEGER" property="remark" />
+	    <association property="orgType" javaType="OrgType" >
+	   		<id property="id" column="tid" /> 
+	   		<result column="tname" property="name" />	
+	   		<result column="tcode" property="code" />	
+	   	</association> 
+	</resultMap>
+	
+	<select id="queryOrgByParentId" resultMap="orgMap">
+		select o.*,t.id tid,t.name tname,t.code tcode from ts_org o
+			left join ts_org_type t
+			on o.type_id=t.id
+		where o.parent_id=#{parentId}
+		order by ord asc
+	</select>
+	
+	<resultMap id="orgSelfMap" type="com.tongwei.auth.model.Org">
+	    <id column="id" jdbcType="INTEGER" property="id" />
+	    <result column="name" jdbcType="VARCHAR" property="name" />
+	    <result column="code" jdbcType="VARCHAR" property="code" />
+	    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+	    <result column="type_id" jdbcType="INTEGER" property="typeId" />
+	    <result column="ord" jdbcType="INTEGER" property="ord" />
+	    <association property="parentOrg" select="selfOrg" column="parent_id" />
+	</resultMap>
+	
+	<!-- 组织self递归查询 -->
+	<select id="selfOrg" parameterType="int" resultMap="orgSelfMap">
+		select o.* from ts_org o 
+		where o.id=#{parent_id}
+	</select>
+	
+	<select id="getOrgById" resultMap="orgSelfMap">
+		select o.* from ts_org o
+		where o.id=#{id}
+		order by ord asc
+	</select>
+	
+	<!-- getAllWithTypeName -->
+	<select id="getAllWithTypeName" resultType="Org">
+		select o.id,o.name,o.code,o.parent_id parentId,o.ord,ot.name typeName from ts_org o 
+			left join ts_org_type ot
+			on o.type_id=ot.id
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,124 @@
+/* 颜色统一修改 */
+/*主导航侧边栏*/
+.login-hd {
+    background: #5878A5;
+}
+.login-hd .hd-inner .split {
+    background-color: #5878A5;
+}
+.login-bd .bd-inner .inner-wrap .lg-zone .lg-box .lg-label h4 {
+    border-left: 4px solid #5878A5;
+}
+.login-bd .bd-inner .inner-wrap .lg-zone .lg-box .enter a.supplier {
+    background-color: #5878A5;
+}
+#pf-hd{
+    background-color: #5878A5;
+}
+#pf-hd .pf-nav-prev:hover, #pf-hd .pf-nav-next:hover {
+    color: #5878A5;
+}
+#pf-bd #pf-sider .sider-nav>li.current{
+    background: #5878A5;
+}
+#pf-bd #pf-page .easyui-tabs1 .tabs li.tabs-selected {
+    border-top: 3px solid #5878A5;
+}
+#pf-bd #pf-sider .sider-nav>li .sider-nav-s li.active a {
+    color: #5878A5;
+}
+.opt-menu .opt-menu-item .iconfont {
+    color: #5878A5;
+}
+.statement .info .section-outer h4 {
+    color: #5878A5;
+}
+#pf-bd #pf-sider .pf-model-name .toggle-icon {
+    background: #5878A5;
+}
+/*左右切换箭头*/
+#pf-bd #pf-sider .pf-model-name .toggle-icon:after{
+    content:"";
+    display: block;
+    position: absolute;
+    right:7px;
+    top: 5px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid transparent;
+    border-right: 6px solid white;
+}
+#pf-bd #pf-sider .pf-model-name .toggle-icon.icon-right:after {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 5px;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+    border-left: 6px solid white;
+    border-right: 6px solid transparent;
+}
+/*主导航箭头*/
+#pf-hd .pf-nav-prev, #pf-hd .pf-nav-next{
+    background-color: #6898c5;
+}
+#pf-bd #pf-sider .sider-nav>li .sider-nav-icon {
+    color: #6898c5;
+}
+/*隔线*/
+#pf-hd .pf-nav .pf-nav-item {
+    border-right: 1px solid #6888a5;
+}
+#pf-hd .pf-logo{
+    border-right-color: #6888a5;
+}
+
+.datagrid-row-checked {
+    background-color: #2f6f9f;
+}
+/* Tab签 */
+#pf-bd #pf-sider .pf-model-name {
+    background: #f1f7f7;
+}
+.tabs-header, .tabs-tool{
+	background-color: #f1f7f7;
+}
+#pf-bd #pf-page .easyui-tabs1 .tabs li a.tabs-inner{
+	background-color: #f1f1f1;
+}
+.tabs li { 
+    border-top: 1px solid #bfbfbf; 
+    webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+body{
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	color: #555;
+}
+.iframe-container{
+	width: 100%;
+	height: 100%;
+	padding: 3px 1px 3px 3px;
+	box-sizing: border-box;
+}
+#pf-bd #pf-sider .sider-nav .nav-inner-item.inner-current{
+	background-color: #eee;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

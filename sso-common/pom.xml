@@ -9,9 +9,6 @@
   </parent>
   <artifactId>sso-common</artifactId>
   
-  <properties>
-  </properties>
-  
   <dependencies>
   
     <dependency>
@@ -22,13 +19,6 @@
 	<dependency>  
         <groupId>org.springframework.session</groupId>  
         <artifactId>spring-session-data-redis</artifactId>  
-	</dependency>
-	
- 	<!-- 单元测试 -->
-	<dependency>
-		<groupId>junit</groupId>
-		<artifactId>junit</artifactId>
-		<scope>test</scope>
 	</dependency>
 	
 	<dependency>
@@ -68,8 +58,6 @@
 		<artifactId>persistence-api</artifactId>
 		<version>1.0.2</version>
 	</dependency>
-    
-	
   </dependencies>
   
 </project>

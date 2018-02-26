@@ -27,7 +27,6 @@ public class SessionDestroyedListener implements ApplicationListener<SessionDest
 		ExpiringSession session = event.getSession();
 		Integer userId = session.getAttribute(Const.SESSION_USER_ID);
 		if(userId!=null){
-//			System.err.println("destroy session");
 			SessionExUtil.deleteSidFromMap(userId, session.getId());
 			boolean b = SessionUtil.isOnlineUser(userId);
 			if(b){//检查是否真的在线

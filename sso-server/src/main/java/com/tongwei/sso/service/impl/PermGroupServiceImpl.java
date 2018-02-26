@@ -7,11 +7,10 @@ import com.tongwei.sso.model.PermGroup;
 import com.tongwei.sso.service.IPermGroupService;
 
 /**
- * @author		yangz
- * @date		2018年1月17日 下午3:16:59
- * @description	
+ * @author yangz
+ * @date 2018年1月17日 下午3:16:59
  */
 @Service
-public class PermGroupServiceImpl extends CmServiceImpl<PermGroup, Integer> implements IPermGroupService{
+public class PermGroupServiceImpl extends CmServiceImpl<PermGroup, Integer> implements IPermGroupService {
 
 }

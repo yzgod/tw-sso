@@ -9,122 +9,122 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
- * @author		yangz
- * @date		2018年1月16日 下午2:54:05
- * @description	用户组
+ * @author yangz
+ * @date 2018年1月16日 下午2:54:05
+ * @description 用户组
  */
-@Table(name="ts_user_group")
-public class UserGroup implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	private Integer id;
-	
-	/** 组名称 */
-	private String name;
-	
-	/** 用户组编码 */
-	private String code;
-	
-	/** 父组id */
-	@Column(name="parent_id")
-	private Integer parentId;
-	
-	/** 组排序 */
-	private Integer ord;
-	
-	/** 备注 */
-	private String remark;
-	
-	private String f1;
-	
-	private String f2;
-	
-	/** 父组 */
-	@Transient
-	private UserGroup parentGroup;
-	
-	@Transient
-	private List<UserGroup> children;
+@Table(name = "ts_user_group")
+public class UserGroup implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	public Integer getId() {
-		return id;
-	}
+    @Id
+    private Integer id;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    /** 组名称 */
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    /** 用户组编码 */
+    private String code;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    /** 父组id */
+    @Column(name = "parent_id")
+    private Integer parentId;
 
-	public String getCode() {
-		return code;
-	}
+    /** 组排序 */
+    private Integer ord;
 
-	public void setCode(String code) {
-		this.code = code;
-	}
+    /** 备注 */
+    private String remark;
 
-	public Integer getParentId() {
-		return parentId;
-	}
+    private String f1;
 
-	public void setParentId(Integer parentId) {
-		this.parentId = parentId;
-	}
+    private String f2;
 
-	public Integer getOrd() {
-		return ord;
-	}
+    /** 父组 */
+    @Transient
+    private UserGroup parentGroup;
 
-	public void setOrd(Integer ord) {
-		this.ord = ord;
-	}
+    @Transient
+    private List<UserGroup> children;
 
-	public String getRemark() {
-		return remark;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getF1() {
-		return f1;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setF1(String f1) {
-		this.f1 = f1;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public String getF2() {
-		return f2;
-	}
+    public String getCode() {
+        return code;
+    }
 
-	public void setF2(String f2) {
-		this.f2 = f2;
-	}
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-	public UserGroup getParentGroup() {
-		return parentGroup;
-	}
+    public Integer getParentId() {
+        return parentId;
+    }
 
-	public void setParentGroup(UserGroup parentGroup) {
-		this.parentGroup = parentGroup;
-	}
+    public void setParentId(Integer parentId) {
+        this.parentId = parentId;
+    }
 
-	public List<UserGroup> getChildren() {
-		return children;
-	}
+    public Integer getOrd() {
+        return ord;
+    }
 
-	public void setChildren(List<UserGroup> children) {
-		this.children = children;
-	}
-	
+    public void setOrd(Integer ord) {
+        this.ord = ord;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getF1() {
+        return f1;
+    }
+
+    public void setF1(String f1) {
+        this.f1 = f1;
+    }
+
+    public String getF2() {
+        return f2;
+    }
+
+    public void setF2(String f2) {
+        this.f2 = f2;
+    }
+
+    public UserGroup getParentGroup() {
+        return parentGroup;
+    }
+
+    public void setParentGroup(UserGroup parentGroup) {
+        this.parentGroup = parentGroup;
+    }
+
+    public List<UserGroup> getChildren() {
+        return children;
+    }
+
+    public void setChildren(List<UserGroup> children) {
+        this.children = children;
+    }
+
 }

@@ -17,7 +17,9 @@ import com.tongwei.sso.util.AuthService;
 /**
  * @author		yangz
  * @date		2018年1月17日 下午4:43:02
- * @description	项目刷新事件--处理所有权限/菜单加载到redis
+ * @description	context准备完成事件
+ * <p>1.处理所有权限/菜单加载到redis
+ * 2.redis监听的job开始执行
  */
 @Component
 public class ContextReadyListener implements ApplicationListener<ApplicationReadyEvent> {

@@ -7,11 +7,10 @@ import com.tongwei.sso.model.LoginLog;
 import com.tongwei.sso.service.ILogLoginService;
 
 /**
- * @author		yangz
- * @date		2018年1月17日 下午3:16:59
- * @description	
+ * @author yangz
+ * @date 2018年1月17日 下午3:16:59
  */
 @Service
-public class LogLoginServiceImpl extends CmServiceImpl<LoginLog, Integer> implements ILogLoginService{
+public class LogLoginServiceImpl extends CmServiceImpl<LoginLog, Integer> implements ILogLoginService {
 
 }

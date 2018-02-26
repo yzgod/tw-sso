@@ -8,18 +8,18 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.tongwei.auth.anno.EnableSSO;
 
 /**
- * @author		yangz
- * @date		2018年1月16日 下午2:04:55
- * @description	服务端启动
+ * @author yangz
+ * @date 2018年1月16日 下午2:04:55
+ * @description 认证端
  */
 @SpringBootApplication
-@EnableSSO(enableRememberMe=true,enableAccessLog=true,enableAuthAnnotation=true,maxInactiveIntervalInSeconds=17200)
+@EnableSSO(enableRememberMe = true, enableAccessLog = true, enableAuthAnnotation = true, maxInactiveIntervalInSeconds = 17200)
 @EnableTransactionManagement
-@MapperScan(basePackages = {"com.tongwei.sso.mapper"})
+@MapperScan(basePackages = { "com.tongwei.sso.mapper" })
 public class StartApp {
-	
-	public static void main(String[] args) {
-		SpringApplication.run(StartApp.class, args);
-	}
-	
+
+    public static void main(String[] args) {
+        SpringApplication.run(StartApp.class, args);
+    }
+
 }

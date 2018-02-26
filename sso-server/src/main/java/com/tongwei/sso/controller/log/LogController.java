@@ -20,42 +20,42 @@ import com.tongwei.sso.service.ILogOpService;
 import com.tongwei.sso.service.IRegisterAppService;
 
 /**
- * @author		yangz
- * @date		2018年1月31日 下午2:34:14
- * @description	应用管理
+ * @author yangz
+ * @date 2018年1月31日 下午2:34:14
+ * @description 日志管理
  */
 @RestController
 @RequestMapping("/log")
-public class LogController extends BaseController{
-	
-	@Autowired
-	IRegisterAppService registerAppService;
-	
-	@Autowired
-	ILogAccessService logAccessService;
-	
-	@Autowired
-	ILogOpService logOpService;
-	
-	@Autowired
-	ILogLoginService logLoginService;
-	
-	@GetMapping("/access/query")
-	public Object access(AccessLogQuery query){
-		List<DBAccessUserLogBean> list = logAccessService.queryByPage(query);
-		return renderPage(list,query);
-	}
-	
-	@GetMapping("/op/query")
-	public Object op(OpLogQuery query){
-		List<DBUserLogBean> list = logOpService.queryByPage(query);
-		return renderPage(list,query);
-	}
-	
-	@GetMapping("/login/query")
-	public Object login(LoginLogQuery query){
-		List<LoginLog> list = logLoginService.queryByPage(query);
-		return renderPage(list,query);
-	}
-	
+public class LogController extends BaseController {
+
+    @Autowired
+    IRegisterAppService registerAppService;
+
+    @Autowired
+    ILogAccessService logAccessService;
+
+    @Autowired
+    ILogOpService logOpService;
+
+    @Autowired
+    ILogLoginService logLoginService;
+
+    @GetMapping("/access/query")
+    public Object access(AccessLogQuery query) {
+        List<DBAccessUserLogBean> list = logAccessService.queryByPage(query);
+        return renderPage(list, query);
+    }
+
+    @GetMapping("/op/query")
+    public Object op(OpLogQuery query) {
+        List<DBUserLogBean> list = logOpService.queryByPage(query);
+        return renderPage(list, query);
+    }
+
+    @GetMapping("/login/query")
+    public Object login(LoginLogQuery query) {
+        List<LoginLog> list = logLoginService.queryByPage(query);
+        return renderPage(list, query);
+    }
+
 }

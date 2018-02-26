@@ -8,87 +8,87 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @author		yangz
- * @date		2018年2月8日 下午4:28:09
- * @description	登录日志
+ * @author yangz
+ * @date 2018年2月8日 下午4:28:09
+ * @description 登录日志
  */
-@Table(name="tp_log_login")
-public class LoginLog implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	private Integer id;
-	
-	@Column(name="login_name")
-	private String loginName;
-	
-	@Column(name="real_name")
-	private String realName;
-	
-	private String ip;
-	
-	@Column(name="create_date")
-	private Date createDate = new Date();
-	
-	// 0-用户注销,1-用户登录,2-不允许登录,3-管理员强制下线
-	private Integer type;
-	
-	public LoginLog() {
-	}
+@Table(name = "tp_log_login")
+public class LoginLog implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	public LoginLog(String loginName, String realName, String ip, Integer type) {
-		this.loginName = loginName;
-		this.realName = realName;
-		this.ip = ip;
-		this.type = type;
-	}
+    @Id
+    private Integer id;
 
-	public Integer getId() {
-		return id;
-	}
+    @Column(name = "login_name")
+    private String loginName;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    @Column(name = "real_name")
+    private String realName;
 
-	public String getLoginName() {
-		return loginName;
-	}
+    private String ip;
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
+    @Column(name = "create_date")
+    private Date createDate = new Date();
 
-	public String getRealName() {
-		return realName;
-	}
+    // 0-用户注销,1-用户登录,2-不允许登录,3-管理员强制下线
+    private Integer type;
 
-	public void setRealName(String realName) {
-		this.realName = realName;
-	}
+    public LoginLog() {
+    }
 
-	public String getIp() {
-		return ip;
-	}
+    public LoginLog(String loginName, String realName, String ip, Integer type) {
+        this.loginName = loginName;
+        this.realName = realName;
+        this.ip = ip;
+        this.type = type;
+    }
 
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public Date getCreateDate() {
-		return createDate;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
+    public String getLoginName() {
+        return loginName;
+    }
 
-	public Integer getType() {
-		return type;
-	}
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
 
-	public void setType(Integer type) {
-		this.type = type;
-	}
-	
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public Date getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
+    }
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
 }

@@ -23,76 +23,76 @@ import com.tongwei.auth.util.AuthUtil;
 import com.tongwei.common.util.ResponseUtil;
 
 /**
- * @author		yangz
- * @date		2018年1月16日 下午3:32:54
- * @description	单点登录/权限 验证filter
+ * @author yangz
+ * @date 2018年1月16日 下午3:32:54
+ * @description 单点登录/权限 验证 核心filter
  */
 public class SsoFilter extends AbstractAuthFilter implements BeanFactoryAware {
-	
-	private RememberMeRule rememberMeRule;
-	
-	private LoginAccessRule loginAccessRule;
-	// session策略
-	private HttpSessionStrategy httpSessionStrategy;
-	
-	@Override
-	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		
-		Integer userId = SessionCore.UserId.value();
-		if(userId==null){ //session验证失败
-			if(enableRememberMe){//验证记住功能
-				boolean success = rememberMeRule.validate(request, response, chain,rememberMeType,rememberMeExpireTime);
-				if(!success){
-					response.sendRedirect(loginUrl+"?successUrl="+successUrl+"&rememberMeType="+rememberMeType);
-				}
-			}else{
-				response.sendRedirect(loginUrl+"?successUrl="+successUrl);
-			}
-			return;
-		}
-		
-		//验证用户是否符合访问该子系统的规则
-		if(!loginAccessRule.isAccess()){
-			ResponseUtil.responseUnAuthorizedJson(response);
-			return;
-		}
-		//url匹配逻辑
-		if(enableMenuPattern && !menuPatternPatch(request)){
-			ResponseUtil.responseUnAuthorizedJson(response);
-			return;
-		}
-		chain.doFilter(request, response);
-	}
 
-	/**
-	 * 匹配逻辑
-	 */
-	private boolean menuPatternPatch(HttpServletRequest req) {
-		String servletPath = req.getServletPath();
-		Set<Menu> menus = AuthUtil.getMenus();
-		for (Menu menu : menus) {
-			String pattern = menu.getPattern();
-			if(StringUtils.isNotBlank(pattern)){
-				return pathMatcher.match(pattern, servletPath);
-			}
-		}
-		return false;
-	}
-	
+    private RememberMeRule rememberMeRule;
 
-	@Override
-	public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
-		httpSessionStrategy = beanFactory.getBean(HttpSessionStrategy.class);
-		logger.info("httpSessionStrategy is "+httpSessionStrategy.getClass().getName());
-		rememberMeRule = beanFactory.getBean(RememberMeRule.class);
-		logger.info("rememberMeRule is "+rememberMeRule.getClass().getName());
-		loginAccessRule = beanFactory.getBean(LoginAccessRule.class);
-		logger.info("LoginAccessRule is "+rememberMeRule.getClass().getName());
-		
-		Validate.notNull(httpSessionStrategy, "httpSessionStrategy is null");
-		Validate.notNull(rememberMeRule, "rememberMeRule is null");
-		Validate.notNull(loginAccessRule, "loginAccessRule is null");
-	}
-	
+    private LoginAccessRule loginAccessRule;
+    // session策略
+    private HttpSessionStrategy httpSessionStrategy;
+
+    @Override
+    public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+
+        Integer userId = SessionCore.UserId.value();
+        if (userId == null) { // session验证失败
+            if (enableRememberMe) {// 验证记住功能
+                boolean success = rememberMeRule.validate(request, response, chain, rememberMeType,
+                        rememberMeExpireTime);
+                if (!success) {
+                    response.sendRedirect(loginUrl + "?successUrl=" + successUrl + "&rememberMeType=" + rememberMeType);
+                }
+            } else {
+                response.sendRedirect(loginUrl + "?successUrl=" + successUrl);
+            }
+            return;
+        }
+
+        // 验证用户是否符合访问该子系统的规则
+        if (!loginAccessRule.isAccess()) {
+            ResponseUtil.responseUnAuthorizedJson(response);
+            return;
+        }
+        // url匹配逻辑
+        if (enableMenuPattern && !menuPatternPatch(request)) {
+            ResponseUtil.responseUnAuthorizedJson(response);
+            return;
+        }
+        chain.doFilter(request, response);
+    }
+
+    /**
+     * 匹配逻辑
+     */
+    private boolean menuPatternPatch(HttpServletRequest req) {
+        String servletPath = req.getServletPath();
+        Set<Menu> menus = AuthUtil.getMenus();
+        for (Menu menu : menus) {
+            String pattern = menu.getPattern();
+            if (StringUtils.isNotBlank(pattern)) {
+                return pathMatcher.match(pattern, servletPath);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        httpSessionStrategy = beanFactory.getBean(HttpSessionStrategy.class);
+        logger.info("httpSessionStrategy is " + httpSessionStrategy.getClass().getName());
+        rememberMeRule = beanFactory.getBean(RememberMeRule.class);
+        logger.info("rememberMeRule is " + rememberMeRule.getClass().getName());
+        loginAccessRule = beanFactory.getBean(LoginAccessRule.class);
+        logger.info("LoginAccessRule is " + rememberMeRule.getClass().getName());
+
+        Validate.notNull(httpSessionStrategy, "httpSessionStrategy is null");
+        Validate.notNull(rememberMeRule, "rememberMeRule is null");
+        Validate.notNull(loginAccessRule, "loginAccessRule is null");
+    }
+
 }

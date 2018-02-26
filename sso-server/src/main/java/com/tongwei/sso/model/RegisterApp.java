@@ -7,96 +7,96 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 /**
- * @author 		yangz
- * @date 		2018年1月26日 下午9:50:20
- * @description	注册应用
+ * @author yangz
+ * @date 2018年1月26日 下午9:50:20
+ * @description 注册应用
  */
-@Table(name="tp_register_app")
-public class RegisterApp implements Serializable{
-	private static final long serialVersionUID = 1L;
-	
-	@Id
-	private Integer id;
-	
-	private String name;
-	
-	@Column(name="app_code")
-	private String appCode;
-	
-	private String remark;
-	
-	private String location;
-	
-	private String author;
-	
-	@Column(name="is_alert")
-	private Boolean isAlert;
-	
-	@Column(name="alert_email")
-	private String alertEmail;
+@Table(name = "tp_register_app")
+public class RegisterApp implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-	public Integer getId() {
-		return id;
-	}
+    @Id
+    private Integer id;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    private String name;
 
-	public String getName() {
-		return name;
-	}
+    @Column(name = "app_code")
+    private String appCode;
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    private String remark;
 
-	public String getAppCode() {
-		return appCode;
-	}
+    private String location;
 
-	public void setAppCode(String appCode) {
-		this.appCode = appCode;
-	}
+    private String author;
 
-	public String getRemark() {
-		return remark;
-	}
+    @Column(name = "is_alert")
+    private Boolean isAlert;
 
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
+    @Column(name = "alert_email")
+    private String alertEmail;
 
-	public String getLocation() {
-		return location;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setLocation(String location) {
-		this.location = location;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public String getAuthor() {
-		return author;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setAuthor(String author) {
-		this.author = author;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Boolean getIsAlert() {
-		return isAlert;
-	}
+    public String getAppCode() {
+        return appCode;
+    }
 
-	public void setIsAlert(Boolean isAlert) {
-		this.isAlert = isAlert;
-	}
+    public void setAppCode(String appCode) {
+        this.appCode = appCode;
+    }
 
-	public String getAlertEmail() {
-		return alertEmail;
-	}
+    public String getRemark() {
+        return remark;
+    }
 
-	public void setAlertEmail(String alertEmail) {
-		this.alertEmail = alertEmail;
-	}
-	
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public Boolean getIsAlert() {
+        return isAlert;
+    }
+
+    public void setIsAlert(Boolean isAlert) {
+        this.isAlert = isAlert;
+    }
+
+    public String getAlertEmail() {
+        return alertEmail;
+    }
+
+    public void setAlertEmail(String alertEmail) {
+        this.alertEmail = alertEmail;
+    }
+
 }

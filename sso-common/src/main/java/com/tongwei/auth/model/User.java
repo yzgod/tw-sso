@@ -12,120 +12,120 @@ import javax.persistence.Table;
 import com.alibaba.fastjson.annotation.JSONField;
 
 /**
- * @author		yangz
- * @date		2018年1月16日 下午2:47:20
- * @description	用户信息类
+ * @author yangz
+ * @date 2018年1月16日 下午2:47:20
+ * @description 用户信息类
  */
 @Table(name = "ts_user")
-public class User implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
-	
-	/*** 用户id */
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-	
-	/*** 登录名 */
-	@Column(name="login_name")
-	private String loginName;
-	
-	/*** 真实名字 */
-	@Column(name="real_name")
-	private String realName;
-	
-	/*** 手机号码 */
-	@Column(name="cell_phone")
-	private String cellPhone;
-	
-	/*** 邮箱 */
-	private String email;
-	
-	/*** 密码 */
-	@JSONField(serialize=false)
-	private String password;
-	
-	/*** 创建时间 */
-	@Column(name="create_time")
-	@JSONField(format="yyyy-MM-dd HH:mm:ss")
-	private Date createTime;
-	
-	/*** 禁用与否 */
-	private Boolean forbidden;
-	
-	/*** 备注 */
-	private String remark;
+public class User implements Serializable {
 
-	public Integer getId() {
-		return id;
-	}
+    private static final long serialVersionUID = 1L;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
-	
-	public Boolean getForbidden() {
-		return forbidden;
-	}
+    /*** 用户id */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	public void setForbidden(Boolean forbidden) {
-		this.forbidden = forbidden;
-	}
+    /*** 登录名 */
+    @Column(name = "login_name")
+    private String loginName;
 
-	public String getLoginName() {
-		return loginName;
-	}
+    /*** 真实名字 */
+    @Column(name = "real_name")
+    private String realName;
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
-	}
+    /*** 手机号码 */
+    @Column(name = "cell_phone")
+    private String cellPhone;
 
-	public String getRealName() {
-		return realName;
-	}
+    /*** 邮箱 */
+    private String email;
 
-	public void setRealName(String realName) {
-		this.realName = realName;
-	}
+    /*** 密码 */
+    @JSONField(serialize = false)
+    private String password;
 
-	public String getCellPhone() {
-		return cellPhone;
-	}
+    /*** 创建时间 */
+    @Column(name = "create_time")
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
 
-	public void setCellPhone(String cellPhone) {
-		this.cellPhone = cellPhone;
-	}
+    /*** 禁用与否 */
+    private Boolean forbidden;
 
-	public String getEmail() {
-		return email;
-	}
+    /*** 备注 */
+    private String remark;
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public Boolean getForbidden() {
+        return forbidden;
+    }
 
-	public Date getCreateTime() {
-		return createTime;
-	}
+    public void setForbidden(Boolean forbidden) {
+        this.forbidden = forbidden;
+    }
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
-	}
+    public String getLoginName() {
+        return loginName;
+    }
 
-	public String getRemark() {
-		return remark;
-	}
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
 
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-	
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getCellPhone() {
+        return cellPhone;
+    }
+
+    public void setCellPhone(String cellPhone) {
+        this.cellPhone = cellPhone;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
 }

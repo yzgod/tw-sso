@@ -16,23 +16,21 @@ import com.tongwei.common.dao.BaseQuery;
 /**
  * @author yangz
  * @date 2017年3月31日 下午10:49:19
- * 基础的Controller
  */
 public class BaseController {
-	protected Logger logger = LoggerFactory.getLogger(getClass());
-	
-	@Autowired
+    protected Logger logger = LoggerFactory.getLogger(getClass());
+
+    @Autowired
     protected HttpServletRequest request;
-	
-	@Autowired
-	protected HttpServletResponse response;
-	
-	protected Map<String,Object> renderPage(List<?> data, BaseQuery<?> query){
-		HashMap<String, Object> map = new HashMap<>(2);
-		map.put("rows", data);
-		map.put("total", query.getTotal());
-		return map;
-	}
-	
-	
+
+    @Autowired
+    protected HttpServletResponse response;
+
+    protected Map<String, Object> renderPage(List<?> data, BaseQuery<?> query) {
+        HashMap<String, Object> map = new HashMap<>(2);
+        map.put("rows", data);
+        map.put("total", query.getTotal());
+        return map;
+    }
+
 }

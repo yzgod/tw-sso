@@ -7,11 +7,10 @@ import com.tongwei.common.dao.CmServiceImpl;
 import com.tongwei.sso.service.IMenuService;
 
 /**
- * @author		yangz
- * @date		2018年1月17日 下午3:16:59
- * @description	
+ * @author yangz
+ * @date 2018年1月17日 下午3:16:59
  */
 @Service
-public class MenuServiceImpl extends CmServiceImpl<Menu, Integer> implements IMenuService{
+public class MenuServiceImpl extends CmServiceImpl<Menu, Integer> implements IMenuService {
 
 }

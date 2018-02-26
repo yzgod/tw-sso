@@ -7,11 +7,10 @@ import com.tongwei.common.dao.CmServiceImpl;
 import com.tongwei.sso.service.IOrgService;
 
 /**
- * @author		yangz
- * @date		2018年1月17日 下午3:16:59
- * @description	
+ * @author yangz
+ * @date 2018年1月17日 下午3:16:59
  */
 @Service
-public class OrgServiceImpl extends CmServiceImpl<Org, Integer> implements IOrgService{
+public class OrgServiceImpl extends CmServiceImpl<Org, Integer> implements IOrgService {
 
 }

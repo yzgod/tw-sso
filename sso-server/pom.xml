@@ -9,7 +9,7 @@
   <packaging>war</packaging>
   
   <dependencies>
-  	<!-- 引入 -->
+  	<!-- 引入common包 -->
   	<dependency>
   		<groupId>com.tongwei</groupId>
 	    <artifactId>sso-common</artifactId>

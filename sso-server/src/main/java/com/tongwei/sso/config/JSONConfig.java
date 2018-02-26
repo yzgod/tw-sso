@@ -21,9 +21,9 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 @Configuration
 public class JSONConfig {
 	
-	/**
-	 * fastjson支持
-	 */
+    /**
+     * fastjson支持
+     */
 	@Bean
     public HttpMessageConverters fastJsonHttpMessageConverters() {
        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
@@ -31,7 +31,6 @@ public class JSONConfig {
        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
        List<MediaType> fastMediaTypes = new ArrayList<>();
        fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
-//       fastMediaTypes.add(new MediaType(MediaType.TEXT_HTML, Charset.forName("UTF-8")));
        fastConverter.setSupportedMediaTypes(fastMediaTypes);
        fastConverter.setFastJsonConfig(fastJsonConfig);
        HttpMessageConverter<?> converter = fastConverter;

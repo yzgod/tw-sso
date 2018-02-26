@@ -1,4 +1,4 @@
-# tw-sso-master
+# tw-sso
     单点登录认证中心
 
     1.采用技术SpringBoot,Spring-Session,Redis,Mysql

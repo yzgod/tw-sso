@@ -1,18 +1,26 @@
-# tw-sso-master
-	单点登录认证中心
+# tw-sso
+## 项目简介
+本项目核心设计目的是提供企业级的单点登录,会话管理,权限认证。
+子应用只需依赖sso-common,简单配置后项目中即可调用sso-server提供的主数据,权限,日志等服务；
+优点：开发迅速、学习简单、轻量级、易扩展。
 
-	1.采用技术SpringBoot,Spring-Session,Redis,Mysql
+## 环境要求
+1.jdk1.8 +
+2.redis mysql
+3.maven
+4.开发工具:eclipse/idea
+5.SpringBoot,Spring-Session,Redis,Mysql
 
-	2.企业级组织架构,主数据管理
+## Features
+1.提供企业级组织架构(公司/部门/岗位),主数据管理,RBAC权限设计
+2.统一会话管理,统一配置权限/子应用菜单
+3.应用横向拓展,支持nginx负载均衡,支持docker
+4.Redis异步汇集日志(LogUtil)
+5.简单的鉴权操作(AuthUtil,注解,jsp标签)
+6.可以很方便的在此基础上开发更多通用功能
 
-	3.RBAC权限设计
+## 预览
+<p align="center">
+    <img src="https://raw.githubusercontent.com/xuxueli/xxl-job/master/doc/images/xxl-logo.jpg">
+</p>
 
-	4.统一会话管理,统一配置权限/子应用菜单
-
-	5.应用横向拓展,支持nginx集群
-
-	6.统一日志管理,异步保存日志
-
-	7.工具类鉴权,注解鉴权,支持jsp标签鉴权
-
-	欢迎issue

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tongwei.auth.anno.RequireRoles;
-import com.tongwei.auth.core.SessionCore;
 import com.tongwei.auth.log.AccessLog;
 import com.tongwei.auth.util.AuthUtil;
 import com.tongwei.auth.util.LogUtil;
@@ -22,13 +21,13 @@ import com.tongwei.auth.util.LogUtil;
 @RestController
 @RequireRoles({ "system_sso", "system_cg" })
 //@RequireUsers(value={"admin1","test"})
+//@RequirePerms(value={"test1:dd","test3:test1","test2:test,test1"},requireType=RequireType.ALL)
 public class QuickStartExample {
 
     String[] users = new String[] { "admin", "test" };
 
     @GetMapping(value = "/example")
     @AccessLog("测试")//访问日志
-    //@RequirePerms(value={"test1:dd","test3:test1","test2:test,test1"},requireType=RequireType.ALL)
     public Object test(HttpServletRequest request) {
         Map<String, Object> map = new HashMap<>();
         map.put("sessionId", request.getSession().getId());
@@ -38,12 +37,6 @@ public class QuickStartExample {
         map.put("isUser", AuthUtil.isUser("admin"));
         map.put("isUsers", AuthUtil.isInUsers(users));
         map.put("menuTree", AuthUtil.getMenuTree());
-        
-        System.err.println("UserId: "+SessionCore.UserId.value());
-        System.err.println("LoginName: "+SessionCore.LoginName.value());
-        System.err.println("RealName: "+SessionCore.RealName.value());
-        System.err.println("CellPhone: "+SessionCore.CellPhone.value());
-        
         try {
             System.out.println(1 / 0);
         } catch (Exception e) {

@@ -14,16 +14,13 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
 /**
- * @author yangz
- * @date 2018年1月30日 上午11:47:32
- * @description
+ * @author      yangz
+ * @date        2018年1月30日 上午11:47:32
+ * @description fastjson配置
  */
 @Configuration
 public class JSONConfig {
 
-    /**
-     * fastjson支持
-     */
     @Bean
     public HttpMessageConverters fastJsonHttpMessageConverters() {
         FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();

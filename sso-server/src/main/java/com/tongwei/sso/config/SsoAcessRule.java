@@ -12,30 +12,30 @@ import com.tongwei.auth.util.AuthUtil;
 import com.tongwei.auth.util.LogUtil;
 
 /**
- * @author		yangz
- * @date		2018年2月9日 上午11:48:22
- * @description	SSO访问非anno地址的规则
- * <p> Primary
+ * @author      yangz
+ * @date        2018年2月26日 上午9:35:34
+ * @description SSO访问非anno地址的规则
+ * <p>Primary
  */
 @Component
 @Primary
-public class SsoAcessRule implements LoginAccessRule{
+public class SsoAcessRule implements LoginAccessRule {
 
-	@Override
-	public boolean isAccess() {
-		AuthUser authUser = AuthUtil.getAuthUser();
-		Set<Role> roles = authUser.getRoles();
-		if(roles==null || roles.isEmpty()){
-			LogUtil.logToDbOp("access denied");
-			return false;
-		}
-		for (Role role : roles) {
-			if(role.getCode().startsWith("system")){
-				return true;
-			}
-		}
-		LogUtil.logToDbOp("access denied");
-		return false;
-	}
+    @Override
+    public boolean isAccess() {
+        AuthUser authUser = AuthUtil.getAuthUser();
+        Set<Role> roles = authUser.getRoles();
+        if (roles == null || roles.isEmpty()) {
+            LogUtil.logToDbOp("access denied");
+            return false;
+        }
+        for (Role role : roles) {
+            if (role.getCode().startsWith("system")) {
+                return true;
+            }
+        }
+        LogUtil.logToDbOp("access denied");
+        return false;
+    }
 
 }

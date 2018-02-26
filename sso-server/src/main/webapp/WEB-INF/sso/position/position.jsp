@@ -59,10 +59,10 @@
     </div>
 </div>
 
-<!-- 新增/编辑组织表单 -->
-<div id="org_data" class="easyui-dialog" closed="true" cache="false" modal="true" buttons="#dlg-buttons">
-    <form id="orgForm" method="post" style="width:400px;height:280px;" class="padding-10" >
-          <div id="org_info" class="org_info">
+<!-- 新增/编辑岗位表单 -->
+<div id="position_data" class="easyui-dialog" closed="true" cache="false" modal="true" buttons="#dlg-buttons">
+    <form id="positionForm" method="post" style="width:400px;height:280px;" class="padding-10" >
+          <div id="position_info" class="position_info">
               <input type="hidden" name="id"/>
               <ul class="li-horizontal">
               	<li>

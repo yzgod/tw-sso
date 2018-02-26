@@ -54,22 +54,15 @@
     </div>
 </div>
 
-<!-- 新增/编辑组织表单 -->
+<!-- 新增组织表单 -->
 <div id="org_data" class="easyui-dialog" closed="true" cache="false" modal="true" buttons="#dlg-buttons">
     <form id="orgForm" method="post" style="width:400px;height:280px;" class="padding-10" >
           <div id="org_info" class="org_info">
-              <input type="hidden" name="id"/>
               <ul class="li-horizontal">
               	<li>
                	<span>组织名称：</span>
                    <div>
-                   	<input type="text" name="name" class="form-control-150 easyui-validatebox" data-options="required:true"  style="width: 250px" >
-                   </div>
-              	</li>
-              	<li>
-               	<span>组织编码：</span>
-                   <div>
-                   	<input type="text" name="code" class="form-control-150 easyui-validatebox" data-options="required:true,validType:['orgCodeRepeat']" style="width: 250px" >
+                   	<input type="text" id="nameAdd" name="name" class="form-control-150 easyui-validatebox" data-options="required:true"  style="width: 250px" >
                    </div>
               	</li>
                <li>
@@ -78,6 +71,12 @@
                    	<input id="orgtype" class="easyui-combobox easyui-validatebox" data-options="required:true" name="typeId"/>
                    </div>
                </li>
+              	<li>
+               	<span id="orgCode">组织编码：</span>
+                   <div id='ogDiv' class="form-control-inner" style="width: 250px">
+                   	<input id='orgCodeInput' type="text" name="code" class="form-control-150 easyui-validatebox" data-options="required:true,validType:['orgCodeRepeat']" style="width: 250px" >
+                   </div>
+              	</li>
                <li>
                		<span>父组织：</span>
                    <div class="form-control-inner">
@@ -100,6 +99,52 @@
           </div>
     </form>
 </div>
+<!-- 编辑组织表单 -->
+<div id="org_data2" class="easyui-dialog" closed="true" cache="false" modal="true" buttons="#dlg-buttons2">
+    <form id="orgForm2" method="post" style="width:400px;height:280px;" class="padding-10" >
+          <div id="org_info2" class="org_info">
+              <input type="hidden" name="id"/>
+              <ul class="li-horizontal">
+              	<li>
+               	<span>组织名称：</span>
+                   <div>
+                   	<input type="text" name="name" class="form-control-150 easyui-validatebox"  style="width: 250px" >
+                   </div>
+              	</li>
+               <li>
+              		<span>组织类别：</span>
+                   <div class="form-control-inner" style="width: 250px">
+                   	<input id="orgTypeEdit" class="form-control-150 easyui-textbox"/>
+                   </div>
+               </li>
+              	<li>
+               	<span id="orgCode">组织编码：</span>
+                   <div class="form-control-inner" style="width: 250px">
+                   	<input id="orgCodeEdit" class="form-control-150 easyui-textbox"/>
+                   </div>
+              	</li>
+               <li>
+               		<span>父组织：</span>
+                   <div class="form-control-inner">
+                   	<input id="parentOrgEdit" class="form-control-150 easyui-textbox"/>
+                   </div>
+               </li>
+               <li>
+                 	<span>排序：</span>
+                   <div>
+                   	<input type="text" id="ordEdit" class="form-control-150 easyui-numberbox" style="width: 275px" name="ord">
+                   </div>
+               </li>
+               <li>
+                 	<span>备注：</span>
+                   <div>
+                   	<input type="text" id="remarkEdit" class="form-control-150" style="width: 250px" name="remark">
+                   </div>
+               </li>
+              </ul>
+          </div>
+    </form>
+</div>
 
 <!-- 模态框 -->
 <div id="dlg-buttons">
@@ -109,6 +154,18 @@
                 <a href="#" class="easyui-linkbutton" iconCls="icon-save" onclick="orgSubmit();">确定</a>
                 <a href="#" class="easyui-linkbutton" iconCls="icon-cancel"
                             onclick="javascript:$('#org_data').dialog('close')">关闭</a>
+            </td>
+        </tr>
+    </table>
+</div>
+<!-- 模态框2 -->
+<div id="dlg-buttons2">
+    <table cellpadding="0" cellspacing="0" style="width:100%">
+        <tr>
+            <td style="text-align:right">
+                <a href="#" class="easyui-linkbutton" iconCls="icon-save" onclick="orgSubmit2();">确定</a>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-cancel"
+                            onclick="javascript:$('#org_data2').dialog('close')">关闭</a>
             </td>
         </tr>
     </table>

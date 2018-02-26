@@ -87,7 +87,7 @@ public class Org implements Serializable {
     }
 
     public Integer getParentId() {
-        return parentId;
+        return parentId==null?0:parentId;
     }
 
     public void setParentId(Integer parentId) {

@@ -1,7 +1,7 @@
 /**
  * 获取权限组树形表格
  */
-function renderPgTree($jq,appCode,selectRow){
+function renderPgTree($jq,appCode){
     $jq.data("flag","1");
     var option = {
         idField: 'id',

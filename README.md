@@ -9,7 +9,7 @@
 2.redis mysql
 3.maven
 4.开发工具:eclipse/idea
-5.SpringBoot,Spring-Session,Redis,Mysql
+5.采用技术SpringBoot,Spring-Session,Redis,Mysql,sso-server端前端采用easyui
 
 ## Features
 1.提供企业级组织架构(公司/部门/岗位),主数据管理,RBAC权限设计
@@ -17,10 +17,9 @@
 3.应用横向拓展,支持nginx负载均衡,支持docker
 4.Redis异步汇集日志(LogUtil)
 5.简单的鉴权操作(AuthUtil,注解,jsp标签)
-6.可以很方便的在此基础上开发更多通用功能
+6.可以很方便的在此基础上开发更多通用功能,比如:集成阿里云短信
 
 ## 预览
 <p align="center">
-    <img src="https://raw.githubusercontent.com/xuxueli/xxl-job/master/doc/images/xxl-logo.jpg">
 </p>
 

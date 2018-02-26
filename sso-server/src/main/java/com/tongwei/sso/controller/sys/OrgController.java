@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import com.tongwei.auth.model.Role;
 import com.tongwei.common.BaseController;
 import com.tongwei.common.model.Result;
 import com.tongwei.common.util.ResultUtil;
+import com.tongwei.sso.mapper.BaseDeptMapper;
 import com.tongwei.sso.mapper.OrgMapper;
 import com.tongwei.sso.mapper.OrgTypeMapper;
 import com.tongwei.sso.mapper.RegisterAppMapper;
@@ -50,6 +52,9 @@ public class OrgController extends BaseController {
 
     @Autowired
     RoleMapper roleMapper;
+    
+    @Autowired
+    BaseDeptMapper baseDeptMapper;
 
     // 根据父id获取子列表
     @GetMapping("/getOrgByParentId")
@@ -71,20 +76,46 @@ public class OrgController extends BaseController {
         boolean exist = orgService.checkIfExist("code", code);
         return !exist;
     }
+    
+    // 获取基础部门列表
+    @GetMapping("/getBaseDept")
+    public Object getBaseDept() {
+        return baseDeptMapper.selectAll();
+    }
 
     // 添加或修改组织
     @PostMapping("/save")
     public Result save(Org org) {
-        if (!AppUtils.validateCode(org.getCode())) {
-            return ResultUtil.doFailure("非法的编码!");
-        }
         if (org.getParentId() == org.getId()) {
             return ResultUtil.doFailure("非法的父组织!");
         }
         if (org.getId() == null) {
+            String code = org.getCode();
+            if (!AppUtils.validateCode(code)) {
+                return ResultUtil.doFailure("非法的编码!");
+            }
+            
+            OrgType orgType = orgTypeMapper.selectByPrimaryKey(org.getTypeId());
+            if("D".equals(orgType.getCode())){
+                Integer parentId = org.getParentId();
+                if(parentId==0){
+                    return ResultUtil.doFailure("部门须挂在组织下!");
+                }else{
+                    Org po = orgService.get(parentId);
+                    String pCode = po.getCode();
+                    org.setCode(pCode+"_"+code);
+                }
+            }
+            boolean exist = orgService.checkIfExist("code", org.getCode());
+            if(exist){
+                return ResultUtil.doFailure("编码重复!");
+            }
+            
             orgService.save(org);
         } else {
             org.setCode(null);
+            org.setTypeId(null);
+            org.setParentId(null);
             orgService.updateNotNull(org);
         }
         return ResultUtil.doSuccess();
@@ -95,6 +126,13 @@ public class OrgController extends BaseController {
     public Object getOrgType() {
         List<OrgType> list = orgTypeMapper.selectAll();
         return list;
+    }
+    
+    // 根据id获取组织类别
+    @GetMapping("/getOrgTypeById/{id}")
+    public Object getOrgTypeById(@PathVariable Integer id) {
+        OrgType orgType = orgTypeMapper.selectByPrimaryKey(id);
+        return orgType;
     }
 
     // 根据组织机构id获取有效角色列表--有效角色,包含父组织的所有角色,角色的父角色

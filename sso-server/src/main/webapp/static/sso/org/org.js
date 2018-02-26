@@ -25,6 +25,22 @@ function orgFormInit(){
         	}
         }
     })
+	$("#orgForm2").form({
+        url: base_url+'/org/save',
+        onSubmit:function(){
+         	return $(this).form("validate")
+        },
+        success: function (res) {
+        	var res = JSON.parse(res)
+        	if (res.code==200) {
+                msg("保存成功！");
+        		$('#org_data2').dialog('close');
+        		renderOrgTree($('#org_tab'), "treegrid",columns_default,selectOrg);
+        	}else{
+        		msg(res.msg);
+        	}
+        }
+    })
 }
 
 //人员表初始化
@@ -85,23 +101,79 @@ function roleInit(){
 
 /** 初始化新增组织 */
 function addOrg(){
-	$("input[name=code]").validatebox({disabled:false})
+	$("#orgtype").combobox("enable")
+	$("#orgCode").text("组织编码：");
+    $("#orgCodeInput").validatebox("destroy");
+    setTimeout(function(){
+        $("#ogDiv").append($('<input id="orgCodeInput" type="text" name="code" data-options="required:true,validType:[\'orgCodeRepeat\']" class="form-control-150 easyui-validatebox" style="width: 250px" >'));
+        var cb = $("#ogDiv .combo")
+        if(cb.length!=0){
+        	cb.remove();
+        }
+        $("#orgCodeInput").validatebox({disabled:false});
+    },100)
+	
+	var row = $("#org_tab").treegrid("getSelected");
 	$("#orgForm").form('clear');
+	if(!row){
+        $("#parentorg").combotreegrid("setValue",{id:0,name:"root"})
+    }else{
+        $("#parentorg").combotreegrid("setValue",{id:row.id,name:row.name})
+    }
 	$("#org_data").dialog("setTitle","添加组织").dialog("open");
 }
 //提交表单
 function orgSubmit(){
 	$("#orgForm").form('submit');
 }
+//提交表单
+function orgSubmit2(){
+	$("#orgForm2").form('submit');
+}
 
 /*编辑组织*/
 function editOrg(){
-	var selectRow = $("#org_tab").datagrid("getSelected");
-	if(selectRow != null){
-		$("input[name=code]").validatebox({disabled:true})
-		showParentOrg(selectRow.parentId);
-		$('#orgForm').form('load', selectRow);
-		$('#org_data').dialog('open').dialog('setTitle', '编辑组织');
+	var row = $("#org_tab").datagrid("getSelected");
+	if(row != null){
+		$("#orgForm2 input[name=id]").val(row.id)
+		$("#orgForm2 input[name=name]").val(row.name)
+		$("#orgTypeEdit").textbox({
+		  value:row.orgType.name,
+		  readonly:true
+		})
+		$("#orgCodeEdit").textbox({
+		  value:row.code,
+		  readonly:true
+		})
+		if(row.parentId!=0){
+    		$.ajax({
+                url: base_url + '/org/getOrgById',
+                dataType: 'json',
+                data :{id:row.parentId},
+                success: function (re) {
+                    if(re.code==200){
+                    	$("#parentOrgEdit").textbox({
+                          value:re.data.name,
+                          readonly:true
+                        })
+                    }
+                }
+            });
+		}else{
+		    $("#parentOrgEdit").textbox({
+                value:"--",
+                readonly:true
+            })
+		}
+		
+		$("#ordEdit").numberbox({
+		  value:row.ord
+		})
+		$("remarkEdit").numberbox({
+		  value:row.remark
+		})
+		
+		$('#org_data2').dialog('open').dialog('setTitle', '编辑组织');
 	}else{
 		$.messager.alert("提示", "请选择要修改的组织！", 'info');
 	}
@@ -120,25 +192,35 @@ function initOrgType(){
 		url:base_url + "/org/getOrgType",
 		method:'get',
 		valueField:'id',
-		textField:'name'
-	});
-}
-
-/* 父组织回显*/
-function showParentOrg(id){
-	if(!id){
-		id=0;
-	}
-	$('#parentorg').combotree({
-		url:base_url + "/org/getOrgById?id="+id,
-		method:"get",
-		onLoadSuccess :function(node,res){
-			var data = res.data;
-			if(!data){
-				$("#parentorg").combotree('setValue',{id:0,text:'root'})
-			}else{
-				$("#parentorg").combotree('setValue',{id:data.id,text:data.name})
+		textField:'name',
+		onChange:function(n,o){
+			if(n != undefined && n!=''){
+    			$.ajax({
+                    url: base_url + '/org/getOrgTypeById/'+n,
+                    dataType: 'json',
+                    success: function (re) {
+                        if(re.code=='D'){//部门
+                            changeOrgCodeDomToBaseDept();
+                            $("#nameAdd").validatebox({
+                                readonly:true
+                            })
+                        }
+                    }
+                });
 			}
 		}
 	});
+}
+
+function changeOrgCodeDomToBaseDept(){
+    $("#orgCode").text("部门选择：");
+    $("#orgCodeInput").combobox({
+        url:base_url + '/org/getBaseDept',
+        method:'get',
+        valueField:'code',    
+        textField:'name',
+        onSelect:function(rec){
+            $("#nameAdd").val(rec.name)
+        }
+    });
 }

@@ -4,6 +4,7 @@ $(function(){
     userInit();
     roleInit();
     positionInit();
+    positionFormInit();
 });
 
 //组织机构初始化
@@ -115,4 +116,38 @@ function roleInit(){
         	posId:0
         }
     });
+}
+
+function positionFormInit(){
+    $("#positionForm").form({
+        url: base_url+'/position/save',
+        onSubmit:function(){
+            return $(this).form("validate")
+        },
+        success: function (res) {
+            var res = JSON.parse(res)
+            if (res.code==200) {
+                msg("保存成功！");
+                $('#position_data').dialog('close');
+                $("#position_tab").treegrid("reload")
+            }else{
+                msg(res.msg);
+            }
+        }
+    })
+}
+
+//提交表单
+function positionSubmit(){
+    $("#positionForm").form('submit');
+}
+
+function addPos(){
+//    $("#orgtype").combobox("enable")
+    $("#position_data").dialog("setTitle","添加岗位").dialog("open");
+}
+
+function editPos(){
+//    $("#orgtype").combobox("enable")
+    $("#position_data").dialog("setTitle","编辑岗位").dialog("open");
 }

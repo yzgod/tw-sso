@@ -18,6 +18,8 @@
 <!-- 岗位 -->
 <div id="header1" style="text-align: right;">
     <span class="header-left">岗位列表</span>
+    <a href="javascript:void(0)" class="easyui-linkbutton white" iconCls="icon-add" onclick="addPos()">新增岗位</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton white" iconCls="icon-edit" onclick="editPos()">编辑岗位</a>
 </div>
 <!-- 人员 -->
 <div id="header2" style="text-align: right;">
@@ -64,27 +66,28 @@
     <form id="positionForm" method="post" style="width:400px;height:280px;" class="padding-10" >
           <div id="position_info" class="position_info">
               <input type="hidden" name="id"/>
+              <input type="hidden" name="orgId"/>
               <ul class="li-horizontal">
-              	<li>
-               	<span>组织名称：</span>
-                   <div>
-                   	<input type="text" name="name" class="form-control-150 easyui-validatebox" data-options="required:true"  style="width: 250px" >
-                   </div>
-              	</li>
-              	<li>
-               	<span>组织编码：</span>
-                   <div>
-                   	<input type="text" name="code" class="form-control-150 easyui-validatebox" data-options="required:true,validType:['orgCodeRepeat']" style="width: 250px" >
-                   </div>
-              	</li>
                <li>
-              		<span>组织类别：</span>
+              		<span>岗位选择：</span>
                    <div class="form-control-inner" style="width: 250px">
-                   	<input id="orgtype" class="easyui-combobox easyui-validatebox" data-options="required:true" name="typeId"/>
+                   	<input id="basePos" class="easyui-combobox easyui-validatebox" data-options="required:true" name="basePosId"/>
                    </div>
                </li>
+              	<li>
+               	<span>岗位名称：</span>
+                   <div>
+                   	<input type="text" name="name" class="form-control-150 easyui-validatebox" data-options="readonly:true"  style="width: 250px" >
+                   </div>
+              	</li>
+              	<li>
+               	<span>岗位编码：</span>
+                   <div>
+                   	<input type="text" name="code" class="form-control-150 easyui-validatebox" data-options="readonly:true" style="width: 250px" >
+                   </div>
+              	</li>
                <li>
-               		<span>父组织：</span>
+               		<span>父岗位：</span>
                    <div class="form-control-inner">
                    	<input id="parentorg" name="parentId" class="easyui-combobox">
                    </div>
@@ -111,9 +114,9 @@
     <table cellpadding="0" cellspacing="0" style="width:100%">
         <tr>
             <td style="text-align:right">
-                <a href="#" class="easyui-linkbutton" iconCls="icon-save" onclick="orgSubmit();">确定</a>
+                <a href="#" class="easyui-linkbutton" iconCls="icon-save" onclick="positionSubmit();">确定</a>
                 <a href="#" class="easyui-linkbutton" iconCls="icon-cancel"
-                            onclick="javascript:$('#org_data').dialog('close')">关闭</a>
+                            onclick="javascript:$('#position_data').dialog('close')">关闭</a>
             </td>
         </tr>
     </table>

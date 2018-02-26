@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -75,6 +76,17 @@ public class PositionController extends BaseController {
         }
 
         return ResultUtil.doSuccess(rootOrgs);
+    }
+    
+    // 添加或修改岗位
+    @PostMapping("/save")
+    public Result save(Position position) {
+        if (position.getId() == null) {//新建
+            
+        } else {//编辑
+           
+        }
+        return ResultUtil.doSuccess();
     }
 
     private void recOrgTree(Org org, List<Org> src) {

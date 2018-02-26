@@ -4,8 +4,8 @@
 优点：开发迅速、学习简单、轻量级、易扩展。
 
 # 环境要求
-   1.jdk1.8 +
-   2.redis mysql
+    1.jdk1.8 +
+    2.redis mysql
    3.maven
    4.开发工具:eclipse/idea
    5.采用技术SpringBoot,Spring-Session,Redis,Mysql,sso-server端前端采用easyui

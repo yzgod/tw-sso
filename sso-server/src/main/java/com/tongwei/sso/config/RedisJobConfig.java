@@ -10,8 +10,8 @@ import com.tongwei.sso.redis.RoleChangeHandler;
 import com.tongwei.sso.redis.UserChangeHandler;
 
 /**
- * @author yangz
- * @date 2018年2月2日 下午12:31:09
+ * @author      yangz
+ * @date        2018年2月2日 下午12:31:09
  * @description 监听redis队列的任务配置
  */
 @Configuration

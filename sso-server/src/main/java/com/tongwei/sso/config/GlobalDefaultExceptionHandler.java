@@ -14,8 +14,8 @@ import com.tongwei.common.model.ResultCode;
 import com.tongwei.common.util.ResultUtil;
 
 /**
- * @author yangz
- * @date 2018年1月19日 下午12:04:15
+ * @author      yangz
+ * @date        2018年1月19日 下午12:04:15
  * @description 全局异常处理
  */
 @ControllerAdvice

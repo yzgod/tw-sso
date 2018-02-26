@@ -14,27 +14,27 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 
 /**
- * @author		yangz
- * @date		2018年1月30日 上午11:47:32
- * @description	
+ * @author yangz
+ * @date 2018年1月30日 上午11:47:32
+ * @description
  */
 @Configuration
 public class JSONConfig {
-	
+
     /**
      * fastjson支持
      */
-	@Bean
+    @Bean
     public HttpMessageConverters fastJsonHttpMessageConverters() {
-       FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
-       FastJsonConfig fastJsonConfig = new FastJsonConfig();
-       fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
-       List<MediaType> fastMediaTypes = new ArrayList<>();
-       fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
-       fastConverter.setSupportedMediaTypes(fastMediaTypes);
-       fastConverter.setFastJsonConfig(fastJsonConfig);
-       HttpMessageConverter<?> converter = fastConverter;
-       return new HttpMessageConverters(converter);
+        FastJsonHttpMessageConverter fastConverter = new FastJsonHttpMessageConverter();
+        FastJsonConfig fastJsonConfig = new FastJsonConfig();
+        fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);
+        List<MediaType> fastMediaTypes = new ArrayList<>();
+        fastMediaTypes.add(MediaType.APPLICATION_JSON_UTF8);
+        fastConverter.setSupportedMediaTypes(fastMediaTypes);
+        fastConverter.setFastJsonConfig(fastJsonConfig);
+        HttpMessageConverter<?> converter = fastConverter;
+        return new HttpMessageConverters(converter);
     }
 
 }

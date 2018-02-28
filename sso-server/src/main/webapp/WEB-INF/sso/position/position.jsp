@@ -71,25 +71,43 @@
                <li>
               		<span>岗位选择：</span>
                    <div class="form-control-inner" style="width: 250px">
-                   	<input id="basePos" class="easyui-combobox easyui-validatebox" data-options="required:true" name="basePosId"/>
+                   	<input id="basePos" class="easyui-combobox easyui-validatebox" 
+                   	                            data-options="required:true,
+                   	                                           url:'<s:ctx/>/position/getBasePositions',
+                   	                                           method:'get',
+                   	                                           valueField:'id',
+                   	                                           textField:'name',
+                   	                                           onSelect:function(rec){
+                   	                                            $('#nameAdd').val(rec.name)
+                   	                                            var o = $('#org_tab').treegrid('getSelected');
+                   	                                            $('#codeAdd').val(o.code+'_'+rec.code)
+                   	                                           }" 
+                   	                                           
+                   	        name="basePosId"/>
                    </div>
                </li>
               	<li>
+               	<span>所属组织：</span>
+                   <div>
+                   	<input type="text" id='orgName' class="form-control-150 easyui-validatebox" data-options="disabled:true"  style="width: 250px" >
+                   </div>
+              	</li>
+              	<li>
                	<span>岗位名称：</span>
                    <div>
-                   	<input type="text" name="name" class="form-control-150 easyui-validatebox" data-options="readonly:true"  style="width: 250px" >
+                   	<input type="text" id="nameAdd" class="form-control-150 easyui-validatebox" data-options="readonly:true"  style="width: 250px" >
                    </div>
               	</li>
               	<li>
                	<span>岗位编码：</span>
                    <div>
-                   	<input type="text" name="code" class="form-control-150 easyui-validatebox" data-options="readonly:true" style="width: 250px" >
+                   	<input type="text" id="codeAdd" class="form-control-150 easyui-validatebox" data-options="readonly:true" style="width: 250px" >
                    </div>
               	</li>
                <li>
                		<span>父岗位：</span>
                    <div class="form-control-inner">
-                   	<input id="parentorg" name="parentId" class="easyui-combobox">
+                   	<input id="parentPosAdd" name="parentId" class="easyui-combobox">
                    </div>
                </li>
                <li>

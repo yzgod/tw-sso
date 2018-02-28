@@ -143,7 +143,38 @@ function positionSubmit(){
 }
 
 function addPos(){
-//    $("#orgtype").combobox("enable")
+	var org = $("#org_tab").treegrid("getSelected");
+	if(!org){
+		msg("请选择组织添加岗位!")
+		return;
+	}
+	$("#parentPosAdd").combotreegrid({
+        url:base_url+'/position/getPostionTreeByOrgId',
+        method:'get',
+        idField:'id',
+        textField:'name',
+        singleSelect:true,
+        queryParams:{
+          oId:org.id
+        },
+        loadFilter:function(res){
+            return res.data
+        },
+        columns: [[               
+            { field: 'id', hidden: 'true'},
+            { field: 'name', title: '岗位名称',width:200},
+            { field: 'code', title: '岗位编码',width:80}
+        ]]
+    })
+    
+	var po = $("#position_tab").treegrid("getSelected");
+	if(po){
+	   $("#parentPosAdd").combotreegrid("setValue",po.id)
+	}
+	
+	$("input[name=orgId]").val(org.id);
+	$("#orgName").val(org.name);
+	
     $("#position_data").dialog("setTitle","添加岗位").dialog("open");
 }
 

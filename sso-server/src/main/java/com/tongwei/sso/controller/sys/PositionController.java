@@ -19,10 +19,12 @@ import com.tongwei.auth.model.Role;
 import com.tongwei.common.BaseController;
 import com.tongwei.common.model.Result;
 import com.tongwei.common.util.ResultUtil;
+import com.tongwei.sso.mapper.BasePositionMapper;
 import com.tongwei.sso.mapper.OrgMapper;
 import com.tongwei.sso.mapper.PositionMapper;
 import com.tongwei.sso.mapper.RegisterAppMapper;
 import com.tongwei.sso.mapper.RoleMapper;
+import com.tongwei.sso.model.BasePosition;
 import com.tongwei.sso.model.RegisterApp;
 import com.tongwei.sso.util.AppUtils;
 
@@ -46,6 +48,9 @@ public class PositionController extends BaseController {
 
     @Autowired
     OrgMapper orgMapper;
+    
+    @Autowired
+    BasePositionMapper basePositionMapper;
 
     // 获取组织下的岗位树
     @GetMapping("/getPostionTreeByOrgId")
@@ -78,10 +83,27 @@ public class PositionController extends BaseController {
         return ResultUtil.doSuccess(rootOrgs);
     }
     
+    // 获取基础岗位列表
+    @GetMapping("/getBasePositions")
+    public Object getBasePositions() {
+        return basePositionMapper.selectAll();
+    }
+    
     // 添加或修改岗位
     @PostMapping("/save")
-    public Result save(Position position) {
+    public Result save(Position position,Integer basePosId) {
         if (position.getId() == null) {//新建
+            BasePosition basePosition = basePositionMapper.selectByPrimaryKey(basePosId);
+            if(basePosition==null){
+                return ResultUtil.doFailure("基础岗位不存在!");
+            }
+            Org org = orgMapper.selectByPrimaryKey(position.getOrgId());
+            if(org==null){
+                return ResultUtil.doFailure("组织不存在!");
+            }
+            position.setName(basePosition.getName());
+            position.setCode(org.getCode()+"_"+basePosition.getCode());
+            positionMapper.insert(position);
             
         } else {//编辑
            

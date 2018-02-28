@@ -111,7 +111,7 @@ public class Position implements Serializable {
     }
 
     public Integer getParentId() {
-        return parentId==null?0:parentId;
+        return parentId;
     }
 
     public void setParentId(Integer parentId) {

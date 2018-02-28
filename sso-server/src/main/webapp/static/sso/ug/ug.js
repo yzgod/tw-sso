@@ -1,7 +1,6 @@
 /* 启动时加载 */
 $(function(){
     renderUgTree($('#ug_tab'), "treegrid",columns_default,selectUg);
-    renderUgTree($('#parentUg'), "combotreegrid",columns_select);
     userInit();
     roleInit();
     ugFormInit();
@@ -84,6 +83,7 @@ function roleInit(id){
 
 /** 初始化新增用户组 */
 function addUg(){
+	renderUgTree($('#parentUg'), "combotreegrid",columns_select);
 	$("input[name=code]").validatebox({disabled:false})
 	$("#ugForm").form('clear');
 	$("#ug_data").dialog("setTitle","添加用户组").dialog("open");
@@ -95,6 +95,7 @@ function ugSubmit(){
 
 /*编辑用户组*/
 function editUg(){
+	renderUgTree($('#parentUg'), "combotreegrid",columns_select);
 	var selectRow = $("#ug_tab").datagrid("getSelected");
 	if(selectRow != null){
 		$("input[name=code]").validatebox({disabled:true})

@@ -99,13 +99,11 @@ public class AuthService {
     }
 
     public void loginout() {
+    	HttpServletRequest request = SessionUtil.getRequest();
+    	// 注销登录日志
+    	LoginLog loginLog = new LoginLog(SessionCore.LoginName.value(), SessionCore.RealName.value(),
+    			request.getRemoteHost(), 0);
         SessionUtil.invalidate();
-        HttpServletRequest request = SessionUtil.getRequest();
-
-        // 注销登录日志
-        LoginLog loginLog = new LoginLog(SessionCore.LoginName.value(), SessionCore.RealName.value(),
-                request.getRemoteHost(), 0);
-
         logLoginMapper.insert(loginLog);
     }
 

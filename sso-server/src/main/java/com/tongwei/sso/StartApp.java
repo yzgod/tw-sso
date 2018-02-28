@@ -13,7 +13,7 @@ import com.tongwei.auth.anno.EnableSSO;
  * @description 认证端
  */
 @SpringBootApplication
-@EnableSSO(enableRememberMe = true, enableAccessLog = true, enableAuthAnnotation = true, maxInactiveIntervalInSeconds = 17200)
+@EnableSSO(enableRememberMe = true, enableAccessLog = true, enableAuthAnnotation = true)
 @EnableTransactionManagement
 @MapperScan(basePackages = { "com.tongwei.sso.mapper" })
 public class StartApp {

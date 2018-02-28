@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,6 +27,7 @@ import com.tongwei.sso.mapper.RegisterAppMapper;
 import com.tongwei.sso.mapper.RoleMapper;
 import com.tongwei.sso.model.BasePosition;
 import com.tongwei.sso.model.RegisterApp;
+import com.tongwei.sso.service.IPositionService;
 import com.tongwei.sso.util.AppUtils;
 
 /**
@@ -50,6 +52,9 @@ public class PositionController extends BaseController {
     OrgMapper orgMapper;
     
     @Autowired
+    IPositionService positionService;
+    
+    @Autowired
     BasePositionMapper basePositionMapper;
 
     // 获取组织下的岗位树
@@ -64,6 +69,16 @@ public class PositionController extends BaseController {
             recPosTree(pos, list);
         }
         return ResultUtil.doSuccess(rootPos);
+    }
+    
+    @GetMapping("/getPositionByParentId")
+    public Object getPositionByParentId(Integer pId) {
+    	return positionService.findByPropAsc("parentId", pId, "ord");
+    }
+    
+    @GetMapping("/getPositionById/{id}")
+    public Object getPositionById(@PathVariable Integer id) {
+    	return positionMapper.getPositionById(id);
     }
 
     // 获取组织架构及岗位
@@ -102,11 +117,22 @@ public class PositionController extends BaseController {
                 return ResultUtil.doFailure("组织不存在!");
             }
             position.setName(basePosition.getName());
-            position.setCode(org.getCode()+"_"+basePosition.getCode());
+            String rCode = org.getCode()+"_"+basePosition.getCode();
+            boolean exist = positionService.checkIfExist("code", rCode);
+            if(exist){
+            	return ResultUtil.doFailure("岗位已存在!");
+            }
+            position.setCode(rCode);
+            if(position.getParentId()==null){
+            	position.setParentId(0);
+            }
             positionMapper.insert(position);
             
         } else {//编辑
-           
+            position.setName(null);
+            position.setParentId(null);
+            position.setCode(null);
+            positionService.updateNotNull(position);
         }
         return ResultUtil.doSuccess();
     }

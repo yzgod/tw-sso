@@ -15,7 +15,7 @@
   
   <select id="queryPositionsByOrgId" resultType="Position" >
   	select p.id,p.name,p.code,p.ord,p.org_id orgId,p.parent_id parentId from ts_position p
-  	where p.org_id=#{oId}
+  	where p.org_id=#{oId} order by ord
   </select>
   
   <!-- 岗位self递归查询 -->

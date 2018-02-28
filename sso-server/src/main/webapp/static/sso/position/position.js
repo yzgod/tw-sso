@@ -1,10 +1,11 @@
-/* 启动时加载 */
 $(function(){
     orgInit();
     userInit();
     roleInit();
     positionInit();
+    basePosInit();
     positionFormInit();
+    positionForm2Init();
 });
 
 //组织机构初始化
@@ -30,6 +31,20 @@ function orgInit(){
 	        	$('#user_tab').datagrid('loadData',{rows:{}})//清空
 	        }
 	    });
+}
+
+function basePosInit(){
+	$("#basePos").combobox({
+		url: base_url +'/position/getBasePositions',
+	    method:'get',
+	    valueField:'id',
+	    textField:'name',
+	    onSelect:function(rec){
+	      $('#nameAdd').val(rec.name)
+	      var o = $('#org_tab').treegrid('getSelected');
+	      $('#codeAdd').val(o.code+'_'+rec.code)
+	    }
+	})
 }
 
 //岗位tree初始化
@@ -121,9 +136,6 @@ function roleInit(){
 function positionFormInit(){
     $("#positionForm").form({
         url: base_url+'/position/save',
-        onSubmit:function(){
-            return $(this).form("validate")
-        },
         success: function (res) {
             var res = JSON.parse(res)
             if (res.code==200) {
@@ -137,9 +149,28 @@ function positionFormInit(){
     })
 }
 
+function positionForm2Init(){
+    $("#positionForm2").form({
+        url: base_url+'/position/save',
+        success: function (res) {
+            var res = JSON.parse(res)
+            if (res.code==200) {
+                msg("保存成功！");
+                $('#position_data2').dialog('close');
+                $("#position_tab").treegrid("reload")
+            }else{
+                msg(res.msg);
+            }
+        }
+    })
+}
+
 //提交表单
 function positionSubmit(){
     $("#positionForm").form('submit');
+}
+function position2Submit(){
+    $("#positionForm2").form('submit');
 }
 
 function addPos(){
@@ -148,37 +179,41 @@ function addPos(){
 		msg("请选择组织添加岗位!")
 		return;
 	}
-	$("#parentPosAdd").combotreegrid({
-        url:base_url+'/position/getPostionTreeByOrgId',
-        method:'get',
-        idField:'id',
-        textField:'name',
-        singleSelect:true,
-        queryParams:{
-          oId:org.id
-        },
-        loadFilter:function(res){
-            return res.data
-        },
-        columns: [[               
-            { field: 'id', hidden: 'true'},
-            { field: 'name', title: '岗位名称',width:200},
-            { field: 'code', title: '岗位编码',width:80}
-        ]]
-    })
-    
+	$("basePos").combobox("enable")
+	$("#parentPosAdd").combotreegrid("enable");
+	$("#positionForm").form('clear');
+	renderPositionTree($("#parentPosAdd"))
+	
 	var po = $("#position_tab").treegrid("getSelected");
 	if(po){
-	   $("#parentPosAdd").combotreegrid("setValue",po.id)
+	   $("#parentPosAdd").combotreegrid("setValue",{id:po.id,name:po.name})
 	}
 	
 	$("input[name=orgId]").val(org.id);
 	$("#orgName").val(org.name);
-	
     $("#position_data").dialog("setTitle","添加岗位").dialog("open");
 }
 
 function editPos(){
-//    $("#orgtype").combobox("enable")
-    $("#position_data").dialog("setTitle","编辑岗位").dialog("open");
+	var po = $("#position_tab").treegrid("getSelected");
+	if(!po){
+		msg("请选择岗位!")
+		return;
+	}
+	$("#positionForm2").form('clear');
+	$("#positionForm2").form('load',po);
+	$.ajax({
+        url: base_url + '/position/getPositionById/'+po.id,
+        dataType: 'json',
+        success: function (re) {
+            $("#positionForm2").form("load",re);
+            var org = $("#org_tab").treegrid("getSelected");
+            $("#nameEdit").val(re.name)
+            $("#codeEdit").val(re.code)
+            if(re.parentPosition){
+	            $("#parentPosEdit").val(re.parentPosition.name);
+            }
+        }
+    });
+    $("#position_data2").dialog("setTitle","编辑岗位").dialog("open");
 }

@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.tongwei</groupId>
-    <artifactId>tw-sso-master</artifactId>
+    <artifactId>tw-sso</artifactId>
     <version>0.1</version>
   </parent>
   <artifactId>sso-server</artifactId>

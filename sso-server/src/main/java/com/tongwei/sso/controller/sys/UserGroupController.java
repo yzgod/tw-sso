@@ -71,6 +71,9 @@ public class UserGroupController extends BaseController {
     // 添加或修改用户组
     @PostMapping("/save")
     public Result save(UserGroup ug) {
+    	if(ug.getParentId()==null){
+    		ug.setParentId(0);
+    	}
         if (ug.getParentId() == ug.getId()) {
             return ResultUtil.doFailure("非法的父用户组!");
         }

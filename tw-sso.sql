@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2018-03-01 10:53:48
+Date: 2018-03-01 14:53:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -66,7 +66,7 @@ CREATE TABLE `tm_org_user` (
   `user_id` int(11) NOT NULL COMMENT '用户id',
   `is_default` bit(1) NOT NULL DEFAULT b'0',
   PRIMARY KEY (`org_id`,`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tm_org_user
@@ -109,7 +109,7 @@ CREATE TABLE `tm_role_menu` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色id',
   `menu_id` int(11) NOT NULL COMMENT '权限id',
   PRIMARY KEY (`role_id`,`menu_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tm_role_menu
@@ -136,24 +136,9 @@ INSERT INTO `tm_role_menu` VALUES ('1', '29');
 INSERT INTO `tm_role_menu` VALUES ('1', '32');
 INSERT INTO `tm_role_menu` VALUES ('1', '33');
 INSERT INTO `tm_role_menu` VALUES ('1', '34');
-INSERT INTO `tm_role_menu` VALUES ('12', '1');
-INSERT INTO `tm_role_menu` VALUES ('12', '2');
-INSERT INTO `tm_role_menu` VALUES ('12', '9');
-INSERT INTO `tm_role_menu` VALUES ('12', '10');
-INSERT INTO `tm_role_menu` VALUES ('12', '11');
-INSERT INTO `tm_role_menu` VALUES ('12', '12');
-INSERT INTO `tm_role_menu` VALUES ('12', '13');
-INSERT INTO `tm_role_menu` VALUES ('12', '14');
-INSERT INTO `tm_role_menu` VALUES ('12', '15');
-INSERT INTO `tm_role_menu` VALUES ('12', '23');
-INSERT INTO `tm_role_menu` VALUES ('12', '24');
-INSERT INTO `tm_role_menu` VALUES ('12', '25');
-INSERT INTO `tm_role_menu` VALUES ('12', '26');
-INSERT INTO `tm_role_menu` VALUES ('12', '27');
-INSERT INTO `tm_role_menu` VALUES ('12', '29');
-INSERT INTO `tm_role_menu` VALUES ('12', '32');
-INSERT INTO `tm_role_menu` VALUES ('12', '33');
-INSERT INTO `tm_role_menu` VALUES ('12', '34');
+INSERT INTO `tm_role_menu` VALUES ('1', '38');
+INSERT INTO `tm_role_menu` VALUES ('1', '39');
+INSERT INTO `tm_role_menu` VALUES ('1', '40');
 
 -- ----------------------------
 -- Table structure for `tm_role_perm`
@@ -177,13 +162,12 @@ CREATE TABLE `tm_user_role` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '角色id',
   `user_id` int(11) NOT NULL COMMENT '用户id',
   PRIMARY KEY (`role_id`,`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tm_user_role
 -- ----------------------------
 INSERT INTO `tm_user_role` VALUES ('1', '1');
-INSERT INTO `tm_user_role` VALUES ('12', '2');
 
 -- ----------------------------
 -- Table structure for `tp_aliyun_sms`
@@ -197,12 +181,16 @@ CREATE TABLE `tp_aliyun_sms` (
   `params` varchar(1000) DEFAULT NULL COMMENT '参数',
   `type` varchar(255) DEFAULT NULL COMMENT '短信类型描述',
   `send_time` datetime DEFAULT NULL COMMENT '发送时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='阿里云短信发送记录';
+  PRIMARY KEY (`id`),
+  KEY `send_time` (`send_time`),
+  KEY `code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='阿里云短信发送记录';
 
 -- ----------------------------
 -- Records of tp_aliyun_sms
 -- ----------------------------
+INSERT INTO `tp_aliyun_sms` VALUES ('2', '18109047620', '渔光物联', 'SMS_98085058', '{\"devices\":\"测试，\",\"name\":\"测试\",\"time\":\"测试\"}', '测试短信', '2018-03-01 09:29:38');
+INSERT INTO `tp_aliyun_sms` VALUES ('3', '18392376170', '渔光物联', 'SMS_78885192', '{\"code\":\"600000\"}', null, '2018-03-01 11:11:05');
 
 -- ----------------------------
 -- Table structure for `tp_log_access`
@@ -222,7 +210,7 @@ CREATE TABLE `tp_log_access` (
   PRIMARY KEY (`id`),
   KEY `app_code` (`app_code`),
   KEY `create_date` (`create_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tp_log_access
@@ -241,18 +229,11 @@ CREATE TABLE `tp_log_login` (
   `type` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `create_date` (`create_date`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tp_log_login
 -- ----------------------------
-INSERT INTO `tp_log_login` VALUES ('1', 'admin', '管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:51:42', '0');
-INSERT INTO `tp_log_login` VALUES ('2', 'appadmin', '子应用管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:51:53', '1');
-INSERT INTO `tp_log_login` VALUES ('3', 'appadmin', '子应用管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:52:01', '0');
-INSERT INTO `tp_log_login` VALUES ('4', 'admin', '管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:52:07', '1');
-INSERT INTO `tp_log_login` VALUES ('5', 'admin', '管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:52:39', '0');
-INSERT INTO `tp_log_login` VALUES ('6', 'appadmin', '子应用管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:52:51', '1');
-INSERT INTO `tp_log_login` VALUES ('7', 'appadmin', '子应用管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:53:25', '0');
 
 -- ----------------------------
 -- Table structure for `tp_log_operate`
@@ -267,7 +248,7 @@ CREATE TABLE `tp_log_operate` (
   PRIMARY KEY (`id`),
   KEY `app_code` (`app_code`),
   KEY `create_date` (`create_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tp_log_operate
@@ -288,48 +269,53 @@ CREATE TABLE `tp_register_app` (
   `alert_email` varchar(255) DEFAULT NULL COMMENT '报警邮箱地址',
   PRIMARY KEY (`id`),
   UNIQUE KEY `app_code` (`app_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='应用注册表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='应用注册表';
 
 -- ----------------------------
 -- Records of tp_register_app
 -- ----------------------------
 INSERT INTO `tp_register_app` VALUES ('1', 'sso', '认证中心', '权限认证中心', null, 'yangz', '', '');
-INSERT INTO `tp_register_app` VALUES ('5', 'cg', '采购系统', '', null, 'yangz', null, '');
 
 -- ----------------------------
 -- Table structure for `ts_base_dept`
 -- ----------------------------
 DROP TABLE IF EXISTS `ts_base_dept`;
 CREATE TABLE `ts_base_dept` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL COMMENT '部门名称',
   `code` varchar(255) NOT NULL COMMENT '部门编码',
   `remark` varchar(255) DEFAULT NULL COMMENT '介绍',
   PRIMARY KEY (`id`),
-  KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='基础部门表,公司建立部门时,需选择基础表中的部门,规范code';
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='基础部门表,公司建立部门时,需选择基础表中的部门,规范code';
 
 -- ----------------------------
 -- Records of ts_base_dept
 -- ----------------------------
-INSERT INTO `ts_base_dept` VALUES ('1', '财务部', 'cwb', null);
+INSERT INTO `ts_base_dept` VALUES ('1', '财务部', 'cwb', '基础的财务部门');
+INSERT INTO `ts_base_dept` VALUES ('2', '行政部', 'xzb', '基础的行政部门');
+INSERT INTO `ts_base_dept` VALUES ('3', '人事部', 'rsb', '基础的人事部门');
 
 -- ----------------------------
 -- Table structure for `ts_base_position`
 -- ----------------------------
 DROP TABLE IF EXISTS `ts_base_position`;
 CREATE TABLE `ts_base_position` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL COMMENT '岗位名称',
   `code` varchar(255) NOT NULL COMMENT '岗位编码',
   `remark` varchar(255) DEFAULT NULL COMMENT '介绍',
   PRIMARY KEY (`id`),
-  KEY `code` (`code`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='基础岗位表,组织建立岗位时,需选择基础表中的岗位,规范code';
+  UNIQUE KEY `code` (`code`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='基础岗位表,组织建立岗位时,需选择基础表中的岗位,规范code';
 
 -- ----------------------------
 -- Records of ts_base_position
 -- ----------------------------
+INSERT INTO `ts_base_position` VALUES ('1', '部门经理', 'po1', '基础');
+INSERT INTO `ts_base_position` VALUES ('2', '总经理', 'zjl', null);
+INSERT INTO `ts_base_position` VALUES ('3', 'hr', 'hr', null);
+INSERT INTO `ts_base_position` VALUES ('4', '财务总监', 'cwzj', '财务');
 
 -- ----------------------------
 -- Table structure for `ts_menu`
@@ -351,7 +337,7 @@ CREATE TABLE `ts_menu` (
   `f4` varchar(255) DEFAULT NULL COMMENT '预留菜单扩展字段4',
   PRIMARY KEY (`id`),
   KEY `app_code` (`app_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ts_menu
@@ -378,6 +364,9 @@ INSERT INTO `ts_menu` VALUES ('29', 'sso', '访问日志', '11', '', '/log/acces
 INSERT INTO `ts_menu` VALUES ('32', 'sso', '基础服务', '0', '', '', 'fuwuzhongxingongchangrenzheng', '2', '', null, null, null, null);
 INSERT INTO `ts_menu` VALUES ('33', 'sso', '短信管理', '32', '', '', 'jinlingyingcaiwangtubiao98', '20', '', null, null, null, null);
 INSERT INTO `ts_menu` VALUES ('34', 'sso', '发送记录', '33', '', '/sms', '', '10', '', null, null, null, null);
+INSERT INTO `ts_menu` VALUES ('38', 'sso', '基础信息', '1', '', '', 'iconfont icon-yunyingyong', '10', '', null, null, null, null);
+INSERT INTO `ts_menu` VALUES ('39', 'sso', '基础部门', '38', '', '/base/dept', '', '1', '', null, null, null, null);
+INSERT INTO `ts_menu` VALUES ('40', 'sso', '基础岗位', '38', '', '/base/position', '', '2', '', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `ts_org`
@@ -394,11 +383,15 @@ CREATE TABLE `ts_org` (
   `f2` varchar(255) DEFAULT NULL COMMENT '拓展字段2',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='组织表';
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8 COMMENT='组织表';
 
 -- ----------------------------
 -- Records of ts_org
 -- ----------------------------
+INSERT INTO `ts_org` VALUES ('7', '测试公司', 'test', '1', '0', '1', null, null, '1');
+INSERT INTO `ts_org` VALUES ('8', '子公司', 'zigs', '3', '7', '1', null, null, '');
+INSERT INTO `ts_org` VALUES ('9', '部门1', 'd1', '7', '8', null, null, null, '');
+INSERT INTO `ts_org` VALUES ('11', '财务部', 'test_cwb', '7', '7', '100', null, null, '');
 
 -- ----------------------------
 -- Table structure for `ts_org_type`
@@ -422,7 +415,7 @@ INSERT INTO `ts_org_type` VALUES ('3', '分子公司', 'CC', null);
 INSERT INTO `ts_org_type` VALUES ('4', '合资公司', 'DC', null);
 INSERT INTO `ts_org_type` VALUES ('5', '区域', 'AR', null);
 INSERT INTO `ts_org_type` VALUES ('6', '事业部', 'SD', null);
-INSERT INTO `ts_org_type` VALUES ('7', '部门', 'D', '');
+INSERT INTO `ts_org_type` VALUES ('7', '部门', 'D', '部门code已硬编码,不可修改');
 
 -- ----------------------------
 -- Table structure for `ts_perm`
@@ -461,11 +454,12 @@ CREATE TABLE `ts_perm_group` (
   `remark` varchar(255) DEFAULT NULL COMMENT '权限组备注',
   PRIMARY KEY (`id`),
   UNIQUE KEY `app_code` (`app_code`,`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COMMENT='权限组';
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='权限组';
 
 -- ----------------------------
 -- Records of ts_perm_group
 -- ----------------------------
+INSERT INTO `ts_perm_group` VALUES ('14', '测试权限组', 'sso', 'test', '0', null, '');
 
 -- ----------------------------
 -- Table structure for `ts_position`
@@ -479,8 +473,9 @@ CREATE TABLE `ts_position` (
   `org_id` int(11) NOT NULL COMMENT '组织id',
   `ord` int(11) DEFAULT NULL COMMENT '排序',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ts_position
@@ -503,13 +498,12 @@ CREATE TABLE `ts_role` (
   UNIQUE KEY `code_2` (`code`,`app_code`),
   KEY `app_code` (`app_code`),
   KEY `code` (`code`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ts_role
 -- ----------------------------
 INSERT INTO `ts_role` VALUES ('1', '超级管理员角色', 'system_sso', 'sso', '0', '超级管理员角色-内置角色', null, null);
-INSERT INTO `ts_role` VALUES ('12', '应用管理员角色-采购系统', 'system_cg', 'sso', '0', '应用管理员-内置角色', null, null);
 
 -- ----------------------------
 -- Table structure for `ts_user`
@@ -528,13 +522,12 @@ CREATE TABLE `ts_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_name` (`login_name`),
   UNIQUE KEY `cell_phone` (`cell_phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ts_user
 -- ----------------------------
-INSERT INTO `ts_user` VALUES ('1', 'admin', '管理员', '12345678', null, '301DE9290755171627162B065DFE425F', '', '2018-02-01 16:48:25', null);
-INSERT INTO `ts_user` VALUES ('2', 'appadmin', '子应用管理员', '18109047620', '', '301DE9290755171627162B065DFE425F', '', '2018-03-01 10:51:05', '');
+INSERT INTO `ts_user` VALUES ('1', 'admin', '管理员', '12345678', '', '301DE9290755171627162B065DFE425F', '', '2018-02-01 16:48:25', '');
 
 -- ----------------------------
 -- Table structure for `ts_user_group`
@@ -550,8 +543,10 @@ CREATE TABLE `ts_user_group` (
   `f2` varchar(255) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL COMMENT '用户组备注',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='用户组';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='用户组';
 
 -- ----------------------------
 -- Records of ts_user_group
 -- ----------------------------
+INSERT INTO `ts_user_group` VALUES ('4', '测试组', 'test', null, '0', null, null, '');
+INSERT INTO `ts_user_group` VALUES ('5', 'ces', 'test2', null, '4', null, null, '');

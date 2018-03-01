@@ -123,5 +123,17 @@ public class ViewController extends BaseController {
     public String sms() {
     	return "sms/sms";
     }
+    
+    // 基础部门
+    @GetMapping("/base/dept")
+    public String baseDept() {
+    	return "org/base_dept";
+    }
+    
+    // 基础岗位
+    @GetMapping("/base/position")
+    public String basePosition() {
+    	return "position/base_position";
+    }
 
 }

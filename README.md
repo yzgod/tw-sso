@@ -21,6 +21,15 @@
 
 # 预览
 <p align="center">
+        用户管理
     <img src='https://github.com/yzgod/tw-sso/blob/master/docs/images/1.png' />
+        菜单管理
+    <img src='https://github.com/yzgod/tw-sso/blob/master/docs/images/3.png' />
+        授权管理
+    <img src='https://github.com/yzgod/tw-sso/blob/master/docs/images/5.png' />
+        基础服务
+    <img src='https://github.com/yzgod/tw-sso/blob/master/docs/images/7.png' />
+        应用管理
+    <img src='https://github.com/yzgod/tw-sso/blob/master/docs/images/8.png' />
 </p>
 

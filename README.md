@@ -21,5 +21,6 @@
 
 # 预览
 <p align="center">
+    <img src='https://github.com/yzgod/tw-sso/blob/master/docs/images/1.png' />
 </p>
 

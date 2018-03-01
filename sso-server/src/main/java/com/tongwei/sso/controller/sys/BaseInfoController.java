@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tongwei.auth.model.OrgType;
 import com.tongwei.common.BaseController;
 import com.tongwei.common.model.Result;
 import com.tongwei.common.util.ResultUtil;
@@ -15,8 +16,10 @@ import com.tongwei.sso.model.BaseDept;
 import com.tongwei.sso.model.BasePosition;
 import com.tongwei.sso.query.BaseDeptQuery;
 import com.tongwei.sso.query.BasePositionQuery;
+import com.tongwei.sso.query.OrgTypeQuery;
 import com.tongwei.sso.service.IBaseDeptService;
 import com.tongwei.sso.service.IBasePositionService;
+import com.tongwei.sso.service.IOrgTypeService;
 
 /**
  * @author yangz
@@ -32,6 +35,9 @@ public class BaseInfoController extends BaseController {
     
     @Autowired
     IBasePositionService positionService;
+    
+    @Autowired
+    IOrgTypeService orgTypeService;
 
     // 基础部门
     @GetMapping("/dept/query")
@@ -77,6 +83,29 @@ public class BaseInfoController extends BaseController {
     		positionService.updateNotNull(basePosition);
     	}
     	return ResultUtil.doSuccess();
+    }
+    
+    // 组织类型
+    @GetMapping("/orgType/query")
+    public Object queryOrgType(OrgTypeQuery query) {
+        List<OrgType> list = orgTypeService.queryByPage(query);
+        return renderPage(list, query);
+    }
+    
+    // 添加或修改组织类型
+    @PostMapping("/orgType/save")
+    public Result orgTypeSave(OrgType orgType){
+        if(orgType.getId() == null){//添加
+            boolean exist = orgTypeService.checkIfExist("code", orgType.getCode());
+            if(exist){
+                return ResultUtil.doFailure("岗位编码重复!");
+            }
+            orgTypeService.save(orgType);
+        }else{//编辑
+            orgType.setCode(null);
+            orgTypeService.updateNotNull(orgType);
+        }
+        return ResultUtil.doSuccess();
     }
     
 

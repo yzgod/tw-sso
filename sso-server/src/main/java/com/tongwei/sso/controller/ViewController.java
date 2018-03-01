@@ -135,5 +135,11 @@ public class ViewController extends BaseController {
     public String basePosition() {
     	return "position/base_position";
     }
+    
+    // 组织类型
+    @GetMapping("/base/orgType")
+    public String orgType() {
+        return "org/orgType";
+    }
 
 }

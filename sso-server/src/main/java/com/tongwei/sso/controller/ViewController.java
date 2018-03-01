@@ -117,5 +117,11 @@ public class ViewController extends BaseController {
     public String appRegister() {
         return "app/register";
     }
+    
+    // 短信管理
+    @GetMapping("/sms")
+    public String sms() {
+    	return "sms/sms";
+    }
 
 }

@@ -37,6 +37,9 @@ public class MainCotroller extends BaseController {
     @PostMapping(value = "/changePwd")
     public Result changePwd(String oldPwd, String newPwd) throws Exception {
         Integer userId = SessionCore.UserId.value();
+        if(userId==null){
+        	return ResultUtil.doFailure("您未登录!");
+        }
         String encodeOldPwd = PasswordUtil.encodePwd(oldPwd);
         User dbUser = userService.get(userId);
         String dbPwd = dbUser.getPassword();
@@ -47,5 +50,6 @@ public class MainCotroller extends BaseController {
         }
         return ResultUtil.doFailure("原密码输入错误!");
     }
+    
 
 }

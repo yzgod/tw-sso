@@ -5,6 +5,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.tongwei.aliyun.config.SsoEnableAliyun;
 import com.tongwei.auth.anno.EnableSSO;
 
 /**
@@ -16,6 +17,7 @@ import com.tongwei.auth.anno.EnableSSO;
 @EnableSSO(enableRememberMe = true, enableAccessLog = true, enableAuthAnnotation = true)
 @EnableTransactionManagement
 @MapperScan(basePackages = { "com.tongwei.sso.mapper" })
+@SsoEnableAliyun
 public class StartApp {
 
     public static void main(String[] args) {

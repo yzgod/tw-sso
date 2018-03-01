@@ -18,9 +18,55 @@
   	<java.version>1.8</java.version>
   </properties>
   
+  <dependencyManagement>
+  	  <dependencies>
+		<dependency>
+	        <groupId>com.alibaba</groupId>
+	        <artifactId>fastjson</artifactId>
+	        <version>1.2.37</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>commons-lang</groupId>
+	        <artifactId>commons-lang</artifactId>
+	        <version>2.6</version>
+	    </dependency>
+	    <!--mybatis-->
+		<dependency>
+		    <groupId>org.mybatis.spring.boot</groupId>
+		    <artifactId>mybatis-spring-boot-starter</artifactId>
+		    <version>1.3.1</version>
+		</dependency>
+		<!--mapper-->
+		<dependency>
+		    <groupId>tk.mybatis</groupId>
+		    <artifactId>mapper-spring-boot-starter</artifactId>
+		    <version>1.1.4</version>
+		</dependency>
+		<!--pagehelper-->
+		<dependency>
+		    <groupId>com.github.pagehelper</groupId>
+		    <artifactId>pagehelper-spring-boot-starter</artifactId>
+		    <version>1.2.1</version>
+		</dependency>
+		<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0.2</version>
+		</dependency>
+	    <dependency>  
+	        <groupId>com.alibaba</groupId>  
+	        <artifactId>druid</artifactId>  
+	        <version>1.1.3</version>
+	    </dependency>
+  	  </dependencies>                                                                               
+  </dependencyManagement>
+  
   <modules>
-  	<!-- 其他模块需引用此公共包 -->
+  	<!-- 公共 -->
   	<module>sso-common</module>
+  	<!-- 基础服务 -->
+  	<module>sso-services</module>
+  	<!-- 认证端 -->
   	<module>sso-server</module>
   </modules>
   

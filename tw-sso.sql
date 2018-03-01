@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 107
-Source Server Version : 50636
-Source Host           : 172.20.112.107:3306
+Source Server         : local
+Source Server Version : 50718
+Source Host           : localhost:3306
 Source Database       : tw-sso
 
 Target Server Type    : MYSQL
-Target Server Version : 50636
+Target Server Version : 50718
 File Encoding         : 65001
 
-Date: 2018-02-24 17:04:34
+Date: 2018-03-01 10:53:48
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -133,6 +133,10 @@ INSERT INTO `tm_role_menu` VALUES ('1', '25');
 INSERT INTO `tm_role_menu` VALUES ('1', '26');
 INSERT INTO `tm_role_menu` VALUES ('1', '27');
 INSERT INTO `tm_role_menu` VALUES ('1', '29');
+INSERT INTO `tm_role_menu` VALUES ('1', '32');
+INSERT INTO `tm_role_menu` VALUES ('1', '33');
+INSERT INTO `tm_role_menu` VALUES ('1', '34');
+INSERT INTO `tm_role_menu` VALUES ('12', '1');
 INSERT INTO `tm_role_menu` VALUES ('12', '2');
 INSERT INTO `tm_role_menu` VALUES ('12', '9');
 INSERT INTO `tm_role_menu` VALUES ('12', '10');
@@ -147,6 +151,9 @@ INSERT INTO `tm_role_menu` VALUES ('12', '25');
 INSERT INTO `tm_role_menu` VALUES ('12', '26');
 INSERT INTO `tm_role_menu` VALUES ('12', '27');
 INSERT INTO `tm_role_menu` VALUES ('12', '29');
+INSERT INTO `tm_role_menu` VALUES ('12', '32');
+INSERT INTO `tm_role_menu` VALUES ('12', '33');
+INSERT INTO `tm_role_menu` VALUES ('12', '34');
 
 -- ----------------------------
 -- Table structure for `tm_role_perm`
@@ -176,6 +183,26 @@ CREATE TABLE `tm_user_role` (
 -- Records of tm_user_role
 -- ----------------------------
 INSERT INTO `tm_user_role` VALUES ('1', '1');
+INSERT INTO `tm_user_role` VALUES ('12', '2');
+
+-- ----------------------------
+-- Table structure for `tp_aliyun_sms`
+-- ----------------------------
+DROP TABLE IF EXISTS `tp_aliyun_sms`;
+CREATE TABLE `tp_aliyun_sms` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `phones` varchar(1000) DEFAULT NULL COMMENT '电话号码',
+  `sign_name` varchar(255) DEFAULT NULL COMMENT '签名',
+  `code` varchar(255) DEFAULT NULL COMMENT '模版',
+  `params` varchar(1000) DEFAULT NULL COMMENT '参数',
+  `type` varchar(255) DEFAULT NULL COMMENT '短信类型描述',
+  `send_time` datetime DEFAULT NULL COMMENT '发送时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='阿里云短信发送记录';
+
+-- ----------------------------
+-- Records of tp_aliyun_sms
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `tp_log_access`
@@ -214,11 +241,18 @@ CREATE TABLE `tp_log_login` (
   `type` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `create_date` (`create_date`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tp_log_login
 -- ----------------------------
+INSERT INTO `tp_log_login` VALUES ('1', 'admin', '管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:51:42', '0');
+INSERT INTO `tp_log_login` VALUES ('2', 'appadmin', '子应用管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:51:53', '1');
+INSERT INTO `tp_log_login` VALUES ('3', 'appadmin', '子应用管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:52:01', '0');
+INSERT INTO `tp_log_login` VALUES ('4', 'admin', '管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:52:07', '1');
+INSERT INTO `tp_log_login` VALUES ('5', 'admin', '管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:52:39', '0');
+INSERT INTO `tp_log_login` VALUES ('6', 'appadmin', '子应用管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:52:51', '1');
+INSERT INTO `tp_log_login` VALUES ('7', 'appadmin', '子应用管理员', '0:0:0:0:0:0:0:1', '2018-03-01 10:53:25', '0');
 
 -- ----------------------------
 -- Table structure for `tp_log_operate`
@@ -317,7 +351,7 @@ CREATE TABLE `ts_menu` (
   `f4` varchar(255) DEFAULT NULL COMMENT '预留菜单扩展字段4',
   PRIMARY KEY (`id`),
   KEY `app_code` (`app_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ts_menu
@@ -329,8 +363,8 @@ INSERT INTO `ts_menu` VALUES ('6', 'sso', '组织机构', '1', '', '/org', 'icon
 INSERT INTO `ts_menu` VALUES ('7', 'sso', '用户组', '1', '', '/ug', 'iconfont icon-zugroup', '3', '', null, null, null, null);
 INSERT INTO `ts_menu` VALUES ('8', 'sso', '岗位管理', '1', '', '/position', 'iconfont icon-hezuohuobanguanli', '2', '', null, null, null, null);
 INSERT INTO `ts_menu` VALUES ('9', 'sso', '菜单管理', '1', '', '/menu', 'iconfont icon-titlebarcaidan', '6', '', null, null, null, null);
-INSERT INTO `ts_menu` VALUES ('10', 'sso', '应用管理', '0', '', '', 'iconfont icon-yunyingyong', '20', '', null, null, null, null);
-INSERT INTO `ts_menu` VALUES ('11', 'sso', '日志管理', '0', '', '', 'iconfont icon-rizhi', '10', '', null, null, null, null);
+INSERT INTO `ts_menu` VALUES ('10', 'sso', '应用管理', '0', '', '', 'iconfont icon-yunyingyong', '3', '', null, null, null, null);
+INSERT INTO `ts_menu` VALUES ('11', 'sso', '日志管理', '32', '', '', 'iconfont icon-rizhi', '10', '', null, null, null, null);
 INSERT INTO `ts_menu` VALUES ('12', 'sso', '操作日志', '11', '', '/log/op', 'iconfont icon-renwu', '4', '', null, null, null, null);
 INSERT INTO `ts_menu` VALUES ('13', 'sso', '登录日志', '11', '', '/log/lg', 'iconfont icon-fenlei', '1', '', null, null, null, null);
 INSERT INTO `ts_menu` VALUES ('14', 'sso', '角色管理', '1', '', '/role', 'iconfont icon-jingxiaoshangfuwu', '8', '', null, null, null, null);
@@ -341,6 +375,9 @@ INSERT INTO `ts_menu` VALUES ('25', 'sso', '组织授权', '23', '', '/role/org'
 INSERT INTO `ts_menu` VALUES ('26', 'sso', '岗位授权', '23', '', '/role/position', 'iconfont icon-renyuanguanli2', '3', '', null, null, null, null);
 INSERT INTO `ts_menu` VALUES ('27', 'sso', '用户组授权', '23', '', '/role/ug', 'iconfont icon-renyuanguanli2', '4', '', null, null, null, null);
 INSERT INTO `ts_menu` VALUES ('29', 'sso', '访问日志', '11', '', '/log/access', 'iconfont icon-richangyewu', '3', '', null, null, null, null);
+INSERT INTO `ts_menu` VALUES ('32', 'sso', '基础服务', '0', '', '', 'fuwuzhongxingongchangrenzheng', '2', '', null, null, null, null);
+INSERT INTO `ts_menu` VALUES ('33', 'sso', '短信管理', '32', '', '', 'jinlingyingcaiwangtubiao98', '20', '', null, null, null, null);
+INSERT INTO `ts_menu` VALUES ('34', 'sso', '发送记录', '33', '', '/sms', '', '10', '', null, null, null, null);
 
 -- ----------------------------
 -- Table structure for `ts_org`
@@ -491,12 +528,13 @@ CREATE TABLE `ts_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_name` (`login_name`),
   UNIQUE KEY `cell_phone` (`cell_phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ts_user
 -- ----------------------------
 INSERT INTO `ts_user` VALUES ('1', 'admin', '管理员', '12345678', null, '301DE9290755171627162B065DFE425F', '', '2018-02-01 16:48:25', null);
+INSERT INTO `ts_user` VALUES ('2', 'appadmin', '子应用管理员', '18109047620', '', '301DE9290755171627162B065DFE425F', '', '2018-03-01 10:51:05', '');
 
 -- ----------------------------
 -- Table structure for `ts_user_group`

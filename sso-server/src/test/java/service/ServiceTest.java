@@ -3,6 +3,9 @@ package service;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.tongwei.aliyun.AliyunSms;
+import com.tongwei.aliyun.AliyunSmsUtil;
+import com.tongwei.aliyun.mapper.SmsMapper;
 import com.tongwei.auth.log.Log;
 import com.tongwei.sso.mapper.LogAccessMapper;
 import com.tongwei.sso.mapper.LogOperateMapper;
@@ -64,11 +67,16 @@ public class ServiceTest extends BaseTest{
 	@Autowired
 	LogOperateMapper operateMapper;
 	
+	@Autowired
+	SmsMapper smsMapper;
+	
 	@Test
 	public void testName() throws Exception {
-		
-		
-		
+		AliyunSms aliyunSms = new AliyunSms("18109047620", "渔光物联", "SMS_98085058",
+				"{\"devices\":\"测试，\",\"name\":\"测试\",\"time\":\"测试\"}");
+		aliyunSms.setType("测试短信");
+		AliyunSmsUtil.send(aliyunSms);
+		Thread.sleep(1000L);
 	}
 	
 

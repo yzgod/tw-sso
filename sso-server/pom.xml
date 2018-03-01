@@ -15,6 +15,11 @@
 	    <artifactId>sso-common</artifactId>
 	    <version>0.1</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.tongwei</groupId>
+	    <artifactId>service-aliyun</artifactId>
+	    <version>0.1</version>
+  	</dependency>
   	
     <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -36,7 +41,6 @@
 	<dependency>
         <groupId>com.alibaba</groupId>
         <artifactId>fastjson</artifactId>
-        <version>1.2.37</version>
     </dependency>
     
     <dependency>
@@ -54,26 +58,21 @@
 	<dependency>
 	    <groupId>org.mybatis.spring.boot</groupId>
 	    <artifactId>mybatis-spring-boot-starter</artifactId>
-	    <version>1.3.1</version>
 	</dependency>
 	<!--mapper-->
 	<dependency>
 	    <groupId>tk.mybatis</groupId>
 	    <artifactId>mapper-spring-boot-starter</artifactId>
-	    <version>1.1.4</version>
 	</dependency>
 	<!--pagehelper-->
 	<dependency>
 	    <groupId>com.github.pagehelper</groupId>
 	    <artifactId>pagehelper-spring-boot-starter</artifactId>
-	    <version>1.2.1</version>
 	</dependency>
 	<dependency>
 		<groupId>javax.persistence</groupId>
 		<artifactId>persistence-api</artifactId>
-		<version>1.0.2</version>
 	</dependency>
-	
     <dependency>
         <groupId>org.aspectj</groupId>
         <artifactId>aspectjweaver</artifactId>
@@ -85,9 +84,44 @@
     <dependency>  
         <groupId>com.alibaba</groupId>  
         <artifactId>druid</artifactId>  
-        <version>1.1.3</version>
     </dependency>
     
+    <!-- 阿里服务sdk及依赖 -->
+	<dependency>
+        <groupId>com.aliyun.alicom</groupId>
+        <artifactId>alicom-mns-receive-sdk</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/alicom-mns-receive-sdk-0.0.1-SNAPSHOT.jar</systemPath>
+    </dependency>	
+	<dependency>
+        <groupId>com.aliyun</groupId>
+        <artifactId>aliyun-java-sdk-core</artifactId>
+        <version>3.2.3</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/aliyun-java-sdk-core-3.2.3.jar</systemPath>
+    </dependency>
+	<dependency>
+        <groupId>com.aliyun</groupId>
+        <artifactId>aliyun-java-sdk-dybaseapi</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/aliyun-java-sdk-dybaseapi-1.0.0-SNAPSHOT.jar</systemPath>
+    </dependency>
+	<dependency>
+        <groupId>com.aliyun</groupId>
+        <artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+        <version>1.0.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/aliyun-java-sdk-dysmsapi-1.0.0.jar</systemPath>
+    </dependency>
+	<dependency>
+        <groupId>com.aliyun.mns</groupId>
+        <artifactId>aliyun-sdk-mns</artifactId>
+        <version>1.1.8</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/aliyun-sdk-mns-1.1.8.jar</systemPath>
+    </dependency>
     <!-- 测试 -->
     <!-- 单元测试 -->
 	<dependency>

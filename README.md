@@ -18,6 +18,7 @@
     4.Redis异步汇集日志(LogUtil)
     5.简单的鉴权操作(AuthUtil,注解,jsp标签)
     6.可以很方便的在此基础上开发更多通用功能
+    7.10万用户同时在线时,redis内存占用大约为300M
 
 # 预览
 <p align="center">

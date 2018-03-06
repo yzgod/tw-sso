@@ -20,12 +20,18 @@ public class SetCookieServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private int rememberMeExpireTime = 7 * 24 * 3600;// 单位秒
+    
+    private String contextPath;
 
     @Override
     public void init(ServletConfig config) throws ServletException {
         String rememberMeExpireTimeStr = config.getInitParameter("rememberMeExpireTime");
+        contextPath = config.getInitParameter("contextPath");
         if (StringUtils.isNotBlank(rememberMeExpireTimeStr)) {
             rememberMeExpireTime = Integer.valueOf(rememberMeExpireTimeStr);
+        }
+        if (StringUtils.isBlank(contextPath)) {
+            contextPath = "/";
         }
     }
 
@@ -37,12 +43,12 @@ public class SetCookieServlet extends HttpServlet {
 
         if (StringUtils.isNotBlank(SESSION)) {
             Cookie cookie = new Cookie("SESSION", SESSION);
-            cookie.setPath("/");
+            cookie.setPath(contextPath);
             resp.addCookie(cookie);
         }
         if (StringUtils.isNotBlank(AUTHUSER)) {
             Cookie cookie = new Cookie("AUTHUSER", AUTHUSER);
-            cookie.setPath("/");
+            cookie.setPath(contextPath);
             cookie.setMaxAge(rememberMeExpireTime);
             resp.addCookie(cookie);
         }

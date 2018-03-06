@@ -3,6 +3,7 @@ package com.tongwei.auth.config;
 import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
@@ -43,6 +44,8 @@ import com.tongwei.auth.util.SyncUtil;
 public class SsoConfiguration extends WebMvcConfigurerAdapter implements ImportAware {
 
 //	private static final Logger logger = LoggerFactory.getLogger(SsoConfiguration.class);
+    @Value("${server.context-path}")
+    private String contextPath;
 
     @Bean
     public FilterRegistrationBean filterRegistration(SsoProperties properties, SsoFilter ssoFilter,
@@ -68,6 +71,7 @@ public class SsoConfiguration extends WebMvcConfigurerAdapter implements ImportA
     @Bean
     public ServletRegistrationBean servletRegistrationBean(SsoProperties properties) {
         ServletRegistrationBean servletRegistrationBean = new ServletRegistrationBean(new SetCookieServlet());
+        servletRegistrationBean.addInitParameter("contextPath",contextPath);
         if (properties.isEnableRememberMe()) {
             servletRegistrationBean.addInitParameter("rememberMeExpireTime",
                     String.valueOf(properties.getRememberMeExpireTime()));

@@ -2,8 +2,6 @@ package com.tongwei.sso.controller;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.servlet.http.Cookie;
 
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tongwei.Const;
 import com.tongwei.auth.model.User;
 import com.tongwei.auth.security.RememberMeType;
 import com.tongwei.auth.security.rule.RememberMeRule;
@@ -23,7 +20,6 @@ import com.tongwei.common.BaseController;
 import com.tongwei.common.exception.AuthenticationExcption;
 import com.tongwei.common.model.Result;
 import com.tongwei.common.util.ResultUtil;
-import com.tongwei.sso.service.IUserService;
 import com.tongwei.sso.util.AuthService;
 
 /**
@@ -36,9 +32,8 @@ import com.tongwei.sso.util.AuthService;
 public class LoginController extends BaseController {
 
     private String successUrl;
-
-    @Autowired
-    IUserService userService;
+    
+    private String setCookieUrl;
 
     @Autowired
     AuthService authService;
@@ -91,7 +86,6 @@ public class LoginController extends BaseController {
                 data.put("AUTHUSER", generateValue);
             }
         }
-        String setCookieUrl = urlMatch(successUrl) + Const.SET_COOKIE_SERVLET_PATH;
         data.put("setCookieUrl", setCookieUrl);
         data.put("successUrl", successUrl);
         data.put("SESSION", request.getSession().getId());
@@ -111,24 +105,12 @@ public class LoginController extends BaseController {
         this.successUrl = successUrl;
     }
 
-    private Pattern pattern = Pattern.compile("/");
+    public String getSetCookieUrl() {
+        return setCookieUrl;
+    }
 
-    public String urlMatch(String url) {
-        if (StringUtils.isBlank(url)) {
-
-        }
-        Matcher matcher = pattern.matcher(url);
-        int num = 0;
-        while (matcher.find()) {
-            num++;
-            if (num == 3) {
-                break;
-            }
-        }
-        if (num == 2) {
-            return url;
-        }
-        return url.substring(0, matcher.start());
+    public void setSetCookieUrl(String setCookieUrl) {
+        this.setCookieUrl = setCookieUrl;
     }
 
 }

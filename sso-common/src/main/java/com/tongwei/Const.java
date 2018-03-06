@@ -26,7 +26,7 @@ public class Const {
 	public static final String AUTHUSER_REMEMBERME = "AUTHUSER";
 
 	/** setcookie的地址 */
-	public static final String SET_COOKIE_SERVLET_PATH = "/sso/setcookie";
+    public static final String SET_COOKIE_SERVLET_PATH = "/setcookie";
 
 	// redis--key相关--------
 	/** 用户存放REDIS的key前缀 */

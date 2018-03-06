@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,6 +26,9 @@ import com.tongwei.auth.util.LogUtil;
 public class QuickStartExample {
 
     String[] users = new String[] { "admin", "test" };
+    
+    @Value("${server.port}")
+    String port;
 
     @GetMapping(value = "/example")
     @AccessLog("测试")//访问日志
@@ -37,6 +41,7 @@ public class QuickStartExample {
         map.put("hasRoleTest", AuthUtil.hasRole("system_cg"));
         map.put("isUser", AuthUtil.isUser("admin"));
         map.put("isUsers", AuthUtil.isInUsers(users));
+        map.put("服务端口port:", port);
         map.put("menuTree", AuthUtil.getMenuTree());
         
         System.err.println("UserId: "+SessionCore.UserId.value());

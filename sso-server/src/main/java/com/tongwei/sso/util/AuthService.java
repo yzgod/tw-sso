@@ -80,6 +80,7 @@ public class AuthService {
             throw new AuthenticationExcption("用户名/密码不正确!");
         }
         HttpServletRequest request = SessionUtil.getRequest();
+        SessionUtil.setUser(user);
         if (user.getForbidden()) {
             // 禁止登录日志
             LoginLog loginLog = new LoginLog(user.getLoginName(), user.getRealName(), request.getRemoteHost(), 2);

@@ -19,7 +19,6 @@ import com.tongwei.Const;
 import com.tongwei.auth.model.User;
 import com.tongwei.auth.security.RememberMeType;
 import com.tongwei.auth.security.rule.RememberMeRule;
-import com.tongwei.auth.util.SessionUtil;
 import com.tongwei.common.BaseController;
 import com.tongwei.common.exception.AuthenticationExcption;
 import com.tongwei.common.model.Result;
@@ -60,7 +59,6 @@ public class LoginController extends BaseController {
         } catch (AuthenticationExcption e) {
             return ResultUtil.doFailure(e.getMessage());
         }
-        SessionUtil.setUser(user);// 登录成功
 
         if ("null".equals(successUrl) || StringUtils.isBlank(successUrl)) {
             successUrl = this.successUrl;
@@ -73,9 +71,6 @@ public class LoginController extends BaseController {
             for (Cookie cookie : cookies) {
                 String name = cookie.getName();
                 String value = cookie.getValue();
-                if ("SESSION".equalsIgnoreCase(name)) {
-                    data.put("SESSION", value);
-                }
                 if ("AUTHUSER".equalsIgnoreCase(name)) {
                     data.put("AUTHUSER", value);
                 }
@@ -99,6 +94,7 @@ public class LoginController extends BaseController {
         String setCookieUrl = urlMatch(successUrl) + Const.SET_COOKIE_SERVLET_PATH;
         data.put("setCookieUrl", setCookieUrl);
         data.put("successUrl", successUrl);
+        data.put("SESSION", request.getSession().getId());
         return ResultUtil.doSuccess(data);
     }
 

@@ -62,8 +62,8 @@ public @interface EnableSSO {
     Class<? extends RememberMeRule> rememberMeRule() default CookieRememberMeRule.class;
 
     /**
-     * sessionid的策略,默认cookie实现
-     * header方式见org.springframework.session.web.http.HeaderHttpSessionStrategy
+     * sessionid的策略,默认cookie实现，token名：SESSION
+     * header方式见org.springframework.session.web.http.HeaderHttpSessionStrategy  TOKEN名：x-auth-token
      * 自定义策略实现org.springframework.session.web.http.MultiHttpSessionStrategy
      **/
     Class<? extends HttpSessionStrategy> httpSessionStrategy() default CookieHttpSessionStrategy.class;

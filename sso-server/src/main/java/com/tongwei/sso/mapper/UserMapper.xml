@@ -121,8 +121,7 @@
 			u.id,u.login_name,u.real_name,u.cell_phone,u.email,u.forbidden
 		 	from ts_user u
 		where 
-			u.login_name=#{loginName}
-			or u.cell_phone=#{loginName}
+			(u.login_name=#{loginName} or u.cell_phone=#{loginName})
 			and u.password=#{password}
 	</select>
 	

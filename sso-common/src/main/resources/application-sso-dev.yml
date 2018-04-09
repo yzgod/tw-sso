@@ -1,0 +1,17 @@
+sso:
+  sys:
+    rememberMeExpireTime: 604800
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
+    timeout: 10000
+    pool: 
+      max-active: 16
+      max-wait: -1
+      max-idle: 5
+      min-idle: 0
+    #password:
+    #sentinel:
+      #master:
+      #nodes:

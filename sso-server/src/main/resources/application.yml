@@ -1,0 +1,48 @@
+spring:
+  #激活配置文件, 加sso-common包配置文件
+  profiles:
+    active: dev,sso-dev
+  #mvc配置
+  mvc:
+    view:
+      prefix: /WEB-INF/sso/
+      suffix: .jsp
+  #数据源配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    validationQuery: SELECT 1 FROM DUAL
+
+#mybatis配置
+mybatis:
+  type-aliases-package: com.tongwei.auth.model
+  mapper-locations: classpath:com/tongwei/sso/mapper/*Mapper.xml
+
+mapper:
+  mappers: com.tongwei.common.dao.CmMapper
+  not-empty: false
+  identity: MYSQL
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+  
+#单点登录配置
+sso:
+  sys:
+    anno: /user/validate*,/changePwd,/register*
+    staticSuffixs: .js,.css,.jpg,.png,.ico
+    appCode: sso
+    isCenter: true
+    encodeSalt: yangz@919573416@qq.com
+
+#阿里云服务配置
+aliyun:
+  accessKeyId: xxx
+  accessKeySecret: xxxx

@@ -166,6 +166,7 @@
 			<directory>src/main/java</directory>
 			<includes>
 				<include>**/*.properties</include>
+				<include>**/*.yml</include>
 				<include>**/*.xml</include>
 			</includes>
 			<filtering>true</filtering>
